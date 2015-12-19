@@ -1,8 +1,0 @@
-
-<h3>更改模板－<%= @template.real_name %></h3>
-
-<%= form_tag "/cms/order_system/templates/#{@template.id}", method: :patch, multipart: true do %>
-
-    <%= render 'template' %>
-
-<% end %>
