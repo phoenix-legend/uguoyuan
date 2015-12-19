@@ -50,6 +50,7 @@ solr/default/data
 .idea
 /db/schema.rb
 /public/uploads/
+/public/uploads/images/
 db/schema.rb
 #bin/
 /dump/*.*
