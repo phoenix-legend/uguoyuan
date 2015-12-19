@@ -1,0 +1,14 @@
+<div class="nav-logo">
+  <img src="/img/index/top.gif" width="100%">
+</div>
+<ul class="nav">
+  <%template_products = @products%>
+  <% template_products.each do |template_product|
+    next if template_product.product.online == false
+  %>
+
+  <li><a href="<%=template_product.product.url + "?&id=#{template_product.product.id.to_s}" %>"><img src="/uploads/images/<%= if template_product.cover_image.blank? then template_product.product.cover_image else template_product.cover_image end %>" alt="" width="100%"/></a></li>
+  <% end %>
+</ul>
+<div class="nav">
+</div>

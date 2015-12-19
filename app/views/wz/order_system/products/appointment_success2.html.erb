@@ -1,0 +1,23 @@
+<div class="top_green">
+  <span class="top_green_title"><%=@product.name%></span>
+</div>
+
+<div style="width: 90%; height: 122px; background-color: #ffffff; margin-left: auto; margin-right: auto; position: relative">
+  <div style="position: absolute; top: 15px; left: 20px;">
+    <img src="/img/success/right.png" height="37px" width="37px"/>
+  </div>
+  <div style="font-family: 'STHeiti Light[STXihei]';position: absolute; top: 23px; left: 65px; font-size: 18px;">
+    恭喜你！ &nbsp;预约成功！
+  </div>
+  <div style="font-family: 'STHeiti Light[STXihei]';position: absolute; top: 58px; left: 65px; font-size: 14px; padding-right: 20px; color: #666666;">
+    工作人员将在3个工作日内与您联系,
+    请保持手机畅通
+  </div>
+
+</div>
+<div class="error"></div>
+<div class="form" style="">
+  <div class="tc submit">
+    <%= submit_tag "返回首页", onclick: "javascript:window.location = '/'; return false;", style: "" %>
+  </div>
+</div>

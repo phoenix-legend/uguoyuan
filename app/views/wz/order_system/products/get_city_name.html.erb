@@ -1,0 +1,71 @@
+<div class="top_green" style="margin-bottom: 0px;">
+  选择城市
+</div>
+<div class="current_city">
+  <span class="current_city_name">上海</span>
+  <span class="current_location">当前定位</span>
+  <span class="current_dangqian">当前</span>
+</div>
+
+<div class="city-lst">
+  <h3>热门</h3>
+
+  <ul style="padding-top: 15px;">
+    <% %w(上海 北京 广州 深圳 成都 重庆).each do |city_name| %>
+        <div onclick="choose_city('<%=city_name%>');return false;">
+          <%= city_name %>
+        </div>
+    <% end %>
+
+  </ul>
+</div>
+<div style="clear: both"></div>
+
+<%= form_tag '/wz/order_system/products/compare_price', id: 'compare_price', method: :get do %>
+
+    <div>
+      <%= hidden_field_tag :car_price, @car_price %>
+      <%= hidden_field_tag :product_id, @product_id %>
+      <%= hidden_field_tag :car_number, @car_number %>
+      <%= hidden_field_tag :phone, @phone %>
+      <%= hidden_field_tag :ip, @ip %>
+      <%= hidden_field_tag :city %>
+    </div>
+    <div class="city-lst" id="cityLst">
+
+      <%
+         group_cities = @cities.group_by { |city| city.first_letter }
+      %>
+
+      <%
+         group_cities.each_pair do |k, v|
+      %>
+          <h3><%= k %></h3>
+          <ul>
+            <% v.each do |city| %>
+                <li onclick="choose_city('<%=city.name%>')">
+                  <a href="#" onclick="return false;">
+                    <%= city.name %>
+                  </a>
+                </li>
+            <% end %>
+
+          </ul>
+      <% end %>
+
+
+<% end %>
+</div>
+<ul class="letters_lst" id="lettersLst">
+  <% ("A".."Z").each do |letter| %>
+      <li><%= link_to letter, "javascript:;" %></li>
+  <% end %>
+
+</ul>
+<script language="javascript">
+    function choose_city(city_name) {
+        $("#city").val(city_name);
+        $("#compare_price").submit();
+    }
+</script>
+<script src="/js/citySelect.js"></script>

@@ -1,0 +1,33 @@
+<h3>产品[<%= @product.name %>]的评论</h3>
+<%= link_to '创建', "/cms/order_system/comments/new?product_id=#{@product.id}", class: 'button tiny' %>
+<%= will_paginate @collection, renderer: FoundationPagination::Rails %>
+<table>
+  <thead>
+  <th>昵称</th>
+  <th>城市</th>
+  <th>手机</th>
+  <th>性别</th>
+  <th>内容</th>
+  <th>时间</th>
+  <th>排序</th>
+  <th>操作</th>
+  </thead>
+  <tbody>
+  <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.nick_name %></td>
+        <td><%= comment.city %></td>
+        <td><%= comment.phone %></td>
+        <td><%= ::OrderSystem::Comment::SEX[comment.sex] rescue '未知' %></td>
+        <td><%= comment.content %></td>
+        <td><%= comment.comment_time.chinese_format rescue '' %></td>
+        <td><%= comment.sort_by %></td>
+        <td>
+          <%= link_to "编辑", "/cms/order_system/comments/#{comment.id}/edit" %>
+          <%= link_to "删除", "/cms/order_system/comments/#{comment.id}", method: :delete, data: {confirm: "您确定要删除此条评论(不可恢复)?"} %>
+        </td>
+      </tr>
+  <% end unless @comments.blank? %>
+  </tbody>
+</table>
+<%= will_paginate @collection, renderer: FoundationPagination::Rails %>

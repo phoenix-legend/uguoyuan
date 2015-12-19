@@ -1,0 +1,32 @@
+<%= link_to "创建功能", :controller => 'cms/employee_validate/functions', :action => 'new', :class => "button" %>
+<div>
+  <%= get_notice_str true %>
+</div>
+<table>
+  <thead>
+  <tr>
+    <th>功能名称</th>
+    <th>父节点</th>
+    <th colspan="2">url</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <%@functions.each do |function|%>
+      <tr>
+        <td><%= raw function.title %></td>
+        <td><%= raw function.parent_title %></td>
+        <td  colspan="2"><%= raw function.page_url %></td>
+        <td>
+          <%= link_to '修改', :controller => 'cms/employee_validate/functions', :action => 'edit', :id => function.id %>
+        </td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+
+

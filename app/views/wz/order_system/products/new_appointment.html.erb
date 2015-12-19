@@ -1,0 +1,81 @@
+<div class="banner" style="position: relative">
+  <%= image_tag(("/uploads/images/#{@product.detail_image}" unless @product.detail_image.blank?), :width => "100%") %>
+  <div style="position: absolute; left: 15px; bottom: 8px; color: #FFFFFF; font-weight: normal;">
+    <p style="font-size: 17px; line-height: 24px; font-weight: bold;"><%= @product.adds_words %></p>
+    <p style="font-size: 13px;">已有<span style="font-size: 15px;"><%= @product.sale_number %></span>人抢购</p>
+  </div>
+  <div style="background-color: RGBA(0,0,0,0.6); padding-left: 15px; padding-right: 20px; height: 30px; position: absolute; right: 0px; bottom: 20px; color: #fff; font-size: 19px;">
+    <span style="font-size: 14px;">￥</span><%= @product.price %>
+  </div>
+</div>
+<%
+   session_content = get_session_content params[:session_content_id]
+   error_message = get_notice_str true
+%>
+
+<div class="form">
+  <%= form_tag('/wz/order_system/products/create_appointment', method: 'post') do %>
+
+      <ul style="">
+        <li>
+          <label>车牌号:</label><%= text_field_tag :car_number, get_show_value('', v3: @car_number, v2: session[:car_number], v1: session_content[:car_number]), class: "form_ipt", placeholder: "如沪A12345" %>
+        </li>
+
+        <li style="border-bottom: none">
+          <label>手机号:</label><%= text_field_tag :phone, get_show_value('', v1: session_content[:phone], v2: session[:phone]), class: "form_ipt", placeholder: "请输入" %>
+        </li>
+      </ul>
+
+      <% unless error_message.blank? %>
+          <div class="error" style="padding-left: 30px; margin-bottom:1px; padding-top: 15px;"><%= error_message %></div>
+      <% end %>
+
+      <div style="padding-left: 30px; height: 35px; margin-bottom: 5px; line-height: 35px; ">
+        <span class="description">为了给您提供更好的服务，请正确填写。</span>
+        </div>
+      <div class="tc submit">
+        <%= submit_tag "确定" %>
+      </div>
+      <div>
+        <%= hidden_field_tag :product_id, @product.id %>
+      </div>
+  <% end %>
+</div>
+
+
+
+<%descriptions = eval(@product.description) rescue nil%>
+<% unless descriptions.blank? %>
+    <div class="intro intro1">
+      <h4><%= unless @product.name.blank? then "#{@product.name}服务说明：" end %></h4>
+      <p>
+        <% (descriptions||[]).each do |description|
+          next if description.blank?
+        %>
+            <%= description %><br>
+        <% end %>
+      </p>
+    </div>
+<% end %>
+
+<% if @product.comments.length > 0%>
+<div class="comments_block">
+    <div class="split-line">
+      用户反馈
+    </div>
+  <div class="comments">
+    <%@product.comments.each do |comment|%>
+    <div class="comment">
+      <div class="title">
+        <img src="/images/<%= if comment.sex == 1 then 'nantouxiang.png' else 'nvtouxiang.jpg' end %>"/>
+        &nbsp;&nbsp;<%= comment.city %>用户：<%= comment.phone %>
+      </div>
+      <div class="content"><%= comment.content %></div>
+    </div>
+    <%end%>
+  </div>
+</div>
+    <div style="height: 20px">
+
+    </div>
+<%end%>

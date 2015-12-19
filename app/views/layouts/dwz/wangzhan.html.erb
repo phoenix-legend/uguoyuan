@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <%= javascript_include_tag "dwz/application", 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag "dwz/application", media: "all", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <meta content="telephone=no" name="format-detection">
+  <!--百度统计-->
+  <script>
+      var _hmt = _hmt || [];
+      (function () {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?6cd37b5fe32b83465d3f4505c71058e3";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+</head>
+<body>
+
+<div class="top">
+  <%= image_tag 'dwz/haoche_stat/promation/index/logo.png', class: 'logo' %>
+  <div class="weixin_logo">
+    <div class="image">
+      <%= image_tag 'dwz/haoche_stat/promation/index/weixin_logo.png' %>
+    </div>
+    <div class="text">
+      关注微信
+    </div>
+    <div style="clear: both"></div>
+  </div>
+  <div class="tab">
+    <div class="context<%= get_tab_selected 'index' %>">
+      <a href="/dwz/haoche_stat/promation">首&nbsp;&nbsp;&nbsp;页</a>
+    </div>
+    <div class="context<%= get_tab_selected 'product_list' %>" >
+      <a href="/dwz/haoche_stat/promation/product_list">产品列表</a>
+    </div>
+    <div class="context<%= get_tab_selected 'topics' %>" >
+      <a href="/dwz/haoche_stat/promation/topics">热门专题</a>
+    </div>
+    <div class="context<%= get_tab_selected 'join_us' %>" >
+      <a href="/dwz/haoche_stat/promation/join_us">联系我们</a>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+</div>
+<div class="real_content">
+  <%= yield %>
+</div>
+<div class="foot">
+  ©2015 Haoche001.com 沪ICP备15022368号-2
+</div>
+</body>
+</html>

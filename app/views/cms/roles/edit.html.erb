@@ -1,0 +1,10 @@
+<h1>修改角色<%= @role.name %></h1>
+
+<%=form_tag('/cms/roles/update', method: :put) do%>
+    角色名称：
+    <%= text_field_tag 'role[name]', @role.name  %>
+    <%= hidden_field_tag 'role_id', @role.id  %>
+    <input type="submit">
+<%end%>
+
+

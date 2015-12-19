@@ -1,0 +1,49 @@
+<h1>更新功能信息</h1>
+<div class="row">
+  <div class="large-6 columns">
+    <%= form_tag("/cms/employee_validate/functions/update2", method: :post) do %>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">名称</label>
+          </div>
+          <div class="large-9 columns">
+            <%= text_field_tag "function[title]", @function.title%>
+            <%= hidden_field_tag "function[id]", @function.id%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">描述信息</label>
+          </div>
+          <div class="large-9 columns">
+            <%= text_field_tag "function[description]", @function.description%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">链接</label>
+          </div>
+          <div class="large-9 columns">
+            <%= text_field_tag "function[page_url]", @function.page_url%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">父节点</label>
+          </div>
+          <div class="large-9 columns">
+            <%=
+                select_tag "function[parent_id]",
+                           options_from_collection_for_select(@parents, "id", "title", @function.parent_id),
+                           include_blank: true
+            %>
+          </div>
+        </div>
+        <input class="button" name="commit" type="submit" value="更新">
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="top_green">
+  参考报价
+</div>
+
+
+<div class="query-lst" style="padding-left: 0px;">
+  <ul>
+    <% (@car_insurance_prices||[]).each_with_index do |car_insurance_price, i| %>
+        <li style="margin-left: 15px; <%= if i+1 == @car_insurance_prices.length then "border-bottom: 1px solid #ddd;" end  %>"><em><%= i+1 %></em><span class="name"><%= car_insurance_price.comp_name %></span><span class="price"><%= car_insurance_price.insurance_price %> <span class="yuan">元</span></span></li>
+    <% end %>
+  </ul>
+</div>
+<div class="error"></div>
+<div class="form" style="">
+<div class="tc submit">
+  <%= submit_tag "重新比价", onclick: "javascript:window.location = '/wz/order_system/products/compare_price?&id=4'; return false;" %>
+
+</div>
+</div>
+
+<script>
+
+</script>

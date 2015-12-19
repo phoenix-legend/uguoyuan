@@ -1,0 +1,65 @@
+<% session_content = get_session_content(params[:session_content_id]) %>
+
+<%= hidden_field_tag :product_id, @comment.product_id %>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">昵称</label>
+  </div>
+  <div class="columns small-3 end">
+    <%= text_field_tag :nick_name, get_show_value(@comment.nick_name, v1:session_content[:nick_name]) %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">城市</label>
+  </div>
+  <div class="columns small-3 end">
+    <%= text_field_tag :city, get_show_value(@comment.city, v1:session_content[:city]) %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">手机</label>
+  </div>
+  <div class="columns small-3 end">
+    <%= text_field_tag :phone, get_show_value(@comment.phone, v1:session_content[:phone]) %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">性别</label>
+  </div>
+  <div class="columns small-3 end">
+    <label class="inline"><%= radio_button_tag :sex, '1', get_show_value(@comment.sex, v1:session_content[:sex]).to_s=="1" %>&nbsp;男&nbsp;&nbsp;&nbsp;
+    <%= radio_button_tag :sex, '0', get_show_value(@comment.sex, v1:session_content[:sex]).to_s=="0" %>&nbsp;女</label>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">排序</label>
+  </div>
+  <div class="columns small-3 end">
+    <%= text_field_tag :sort_by, get_show_value(@comment.sort_by, v1:session_content[:sort_by]) %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">评论时间</label>
+  </div>
+  <div class="columns small-3 end">
+    <%= date_field_tag :comment_time, (get_show_value(@comment.comment_time, v1:session_content[:comment_time]).to_date rescue '') %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right">
+    <label class="inline text-right">评论内容</label>
+  </div>
+  <div class="columns small-6 end">
+    <%= text_area_tag :content, get_show_value(@comment.content, v1:session_content[:content]), size: '20x5' %>
+  </div>
+</div>
+<div class="row">
+  <div class="columns small-2 text-right end">
+    <%= submit_tag '保存', class: 'button tiny' %>
+  </div>
+</div>

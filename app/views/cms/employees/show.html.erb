@@ -1,0 +1,11 @@
+<h4 class="ui dividing ">
+	<%= @employee.email %>可以使用的功能
+</h4>
+
+<div class="ui list">
+  <% unless @functions.nil? %>
+	<% @functions.each do |function| %>
+		<div class="item"><%= function.title %></div>
+	<% end %>
+  <% end %>
+</div>

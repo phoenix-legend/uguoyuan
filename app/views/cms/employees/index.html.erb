@@ -1,0 +1,28 @@
+<%= link_to "创建员工", new_cms_employee_path, html_option = { :class => "button"} %>
+<%= get_notice_str true %>
+<table>
+  <thead>
+    <tr>
+      <th>email</th>
+      <th>姓名</th>
+      <th colspan="2">操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= raw employee.email %></td>
+        <td><%= raw employee.real_name %></td>
+        <td>
+          <%= link_to '展示权限列表', cms_employee_path(employee) %> ||
+          <%= link_to '设置角色', :action =>'set_role', :id=>employee.id %> ||
+          <%= link_to '修改', :action =>'edit', :id=>employee.id %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

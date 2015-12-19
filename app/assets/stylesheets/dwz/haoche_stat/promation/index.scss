@@ -1,0 +1,18 @@
+.notice {
+  line-height: 30px;
+  font-size: 15px;
+}
+
+.three_pic{
+  .pic{
+    width: 30%;
+    float: left;
+    .p{
+      width: 100%;
+    }
+  }
+  .middle{
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

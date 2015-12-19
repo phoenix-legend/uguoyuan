@@ -1,0 +1,13 @@
+
+<p>
+  <strong>Key:</strong>
+  <%= @system_config.k %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @system_config.v %>
+</p>
+
+<%= link_to '编辑', edit_cms_sys_system_config_path(@system_config) %> |
+<%= link_to '返回', cms_sys_system_configs_path %>

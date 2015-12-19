@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>保险后台登录</title>
+  <%= javascript_include_tag "cms/base" %>
+  <%= stylesheet_link_tag    "cms/base" %>
+  <%= javascript_include_tag "vendor/modernizr" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+    <div id="background"><%= image_tag 'back.jpg' %></div>
+    <div class="row">
+        <div class="large-12 columns " style="height: 150px"></div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 large-offset-3 columns text-center">
+          <% flash.each do |name, msg| -%>
+              <div data-alert class="alert-box">
+                <%= content_tag :div, msg, class: name %>
+                <a href="#" class="close">&times;</a>
+              </div>
+          <% end -%>
+        </div>
+    </div>
+    <br/>
+    <%= form_tag('/cms/employee_validate/functions/login') do -%>
+      <div class="row">
+        <div class="large-3 large-offset-3 columns">
+          <%= text_field_tag :email,'', placeholder:"邮箱email"%>
+        </div>
+        <div class="large-3 columns">
+          <%= password_field_tag :password, '',placeholder: "密码password" %>
+        </div>
+        <div class="large-3 columns">
+          <%= submit_tag '登录login' , :class => 'button round' %>
+        </div>
+      </div>
+
+   <% end %>
+
+   </body>
+</html>

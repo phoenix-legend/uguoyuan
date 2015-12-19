@@ -1,0 +1,484 @@
+/* 页面元素初始化和常用样式定义-start */
+/*======== 全局 ========*/
+body, div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+/*根节点默认为16*/
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #f4f4f4;
+    color: #333;
+    font: 24px/1.5 Arial, Microsoft YaHei, SimSun;
+}
+
+fieldset, img {
+    border: none;
+    vertical-align: middle;
+}
+
+:focus {
+    outline: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*sup,sub{ font-size: 100%; vertical-align: baseline;}*/
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+em {
+    font-style: normal;
+}
+
+input, button, select, textarea {
+    outline: none; /*border: none;*/
+    font-family: "microsoft yahei";
+}
+
+input:not([type="submit"]), textarea {
+    text-indent: 8px;
+    vertical-align: middle;
+}
+
+/*-webkit-appearance: none; 去除iphone默认input样式。*/
+input[type="submit"] {
+    cursor: pointer;
+    border: none;
+    -webkit-appearance: none;
+}
+
+/*禁止了文本框的拖拉*/
+textarea {
+    resize: none;
+}
+
+/*使文本段落左右两边对齐*/
+p {
+    text-align: justify;
+    text-justify: distribute;
+}
+
+/*超链接*/
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*a:link, a:visited{}*/
+/*a:hover{}*/
+/*a:active{}*/
+/*浮动*/
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+/*清除浮动*/
+.clr {
+    *zoom: 1;
+}
+
+.clr:after {
+    clear: both;
+    display: table;
+    content: "";
+}
+
+/*常用样式*/
+.tl {
+    text-align: left;
+}
+
+.tr {
+    text-align: right;
+}
+
+.tc {
+    text-align: center;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.hide-text, .over-hide {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.hide-text {
+    text-indent: 100%;
+}
+
+.over-hide {
+    text-overflow: ellipsis;
+}
+
+/* 页面元素初始化和常用样式定义-end */
+
+/*首页*/
+.nav-logo {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.nav {
+    margin-bottom: 30px;
+}
+
+.nav li {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.banner {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/*信息提交表单*/
+.form ul {
+    padding-left: 30px;
+    border-top: 1px #aaaaaa solid;
+    border-bottom: 1px #aaaaaa solid;
+    background-color: #ffffff;
+}
+
+.form li {
+    position: relative;
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 1px #ccc solid
+}
+
+.form li label {
+    display: inline-block;
+    padding-right: 20px;
+    font-size: 15px;
+    color: #333;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.form_ipt {
+    font-size: 15px;
+    border-style: none;
+}
+
+.unit{position: absolute; right: 15px; font-size: 15px; line-height: 44px;}
+
+.form .submit input {
+    width: 80%;
+    height: 40px;
+    background-color: #4abdcc;
+    font-size: 17px;
+    color: #fff;
+    border-style: none;
+}
+
+.form .submit .return_home {
+    width: 80%;
+    height: 40px;
+    background-color: #4abdcc;
+    font-size: 17px;
+    color: #fff;
+    border-style: none;
+}
+
+.description {
+    font-size: 14px;
+    color: #ccc;
+
+}
+
+/*出错提示*/
+.error {
+    color: #f00;
+    font-size: 15px;
+    margin-bottom: 30px;
+    padding-left: 30px;
+}
+
+/*成功页面*/
+.top_green {
+    height: 45px;
+    width: 100%;
+    background-color: #4abdcc;
+    text-align: center;
+    font-size: 17px;
+    color: #ffffff;
+    line-height: 45px;
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+/*城市选择*/
+.city-lst h3 {
+    height: 30px;
+    line-height: 30px;
+    background: #f8f8f8;
+    font-size: 15px;
+    color: #000;
+}
+
+.current_city{
+    height: 40px;
+    width: 100%;
+}
+
+.current_city .current_city_name{
+    line-height: 40px;
+    font-size: 14px;
+    padding-left: 13px;
+    color: #4abdcc;
+}
+.current_city .current_location{
+    line-height: 40px;
+    font-size: 14px;
+    padding-left: 10px;
+    color: #999999;
+}
+.current_dangqian{
+    color: #438faf;
+    font-size: 10px;
+    padding-top: 10px;
+    padding-right: 5px;
+    line-height: 30px;
+    float: right;
+}
+
+.city-lst h3, .city-lst ul {
+    padding: 0 14px;
+}
+
+.city-lst ul li {
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    height: 40px;
+}
+
+.city-lst ul li a {
+    color: #333;
+}
+
+.city-lst ul div{
+    height: 30px;
+    width: 75px;
+    margin-left: 15px;
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    line-height: 30px;
+    border: 1px solid #b6e2f0;
+    font-size: 14px;
+    color: #b6e2f0;
+    float: left;
+    text-align: center;
+    color: #666666;
+}
+
+
+.city-lst ul li:last-child {
+    border-bottom: none;
+}
+
+.letters_lst {
+    position: fixed;
+    /*top: 15%;*/
+    top: 111px;
+    right: 10px;
+}
+
+.letters_lst li {
+    width: 15px;
+    line-height: 14px;
+    font-size: 10px;
+    color: #2c6dad;
+    text-align: center;
+}
+
+/*城市选择*/
+
+.ipt, .select {
+    width: 76%;
+    height: 34px;
+    background: #fff;
+    line-height: 34px;
+    border: 1px solid #ddd !important;
+    text-indent: 9px;
+    font-size: 15px;
+    color: #666;
+}
+
+/*.ipt {*/
+    /*height: 30px;*/
+    /*line-height: inherit;*/
+    /*padding: 19px 0;*/
+/*}*/
+
+.select {
+    text-indent: 4px;
+}
+
+.intro {
+    padding: 7px 30px 0 30px;
+    /*padding-left: 30px;*/
+    color: #666666
+}
+
+.intro p {
+    font-size: 14px;
+
+}
+
+.intro1 h4 {
+    margin-top: 20px;
+    margin-bottom: 7px;
+    font-size: 14px;
+
+}
+
+.query-lst{
+    padding-left: 15px;
+    background-color: #ffffff;
+}
+
+/*.query-lst h2 {*/
+    /*line-height: 105px;*/
+    /*text-indent: 28px;*/
+    /*background: #f7f7f7;*/
+    /*font-size: 36px;*/
+/*}*/
+
+
+/*展示报价详情*/
+.query-lst li {
+    height: 45px;
+    line-height: 45px;
+    border-top: 1px solid #ddd;
+    padding: 0 0px;
+}
+.query-lst .name{
+    font-size: 15px;
+    padding-left: 4px;
+}
+
+.query-lst li span.price {
+    float: right;
+    font-size: 16px;
+    padding-right: 12px;
+    color: #ff4932;
+}
+.query-lst li span.yuan{
+    font-size: 15px;
+    padding-left: 1px;
+    color: #000000;
+}
+
+.query-lst li em {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background: #8eb9f5;
+    vertical-align: middle;
+    line-height: 28px;
+    margin-right: 10px;
+    text-align: center;
+    color: #fff;
+    font-family: "Arial";
+}
+
+.query-lst li:nth-child(1) em {
+    background: #ff4932;
+}
+
+.query-lst li:nth-child(2) em {
+    background: #ff8432;
+}
+
+.query-lst li:nth-child(3) em {
+    background: #ffab32;
+}
+
+.query-lst li:nth-child(4) em {
+    background: #66cb03;
+}
+
+.comments_block .split-line{
+    margin-top: 10px;
+    background-color: #4abdcc;
+    height: 25px;
+    /*width: 100%;*/
+    line-height: 25px;
+    font-size: 13px;
+    color: #ffffff;
+    padding-left: 20px;
+}
+.comments_block{
+    margin-bottom: 10px;
+}
+
+.comments_block .comments{
+    margin: 10px 30px 10px 30px;
+}
+
+.comments_block .comments .comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.comments_block .comments .comment .title{
+    color: #8a8a8a;
+}
+
+.comments_block .comments .comment .title img{
+    width: 30px;
+    height: 30px;
+}
+
+.comments_block .comments .comment .content{
+    margin-top: 8px;
+    /*width: 90%;*/
+    min-height: 50px;
+    padding: 0 10px 0 10px;
+    border: 1px #f5f6f6 solid;
+    border-radius: 5px;
+    background-color: #ffffff;
+    white-space: pre-wrap;
+    /*text-indent: 2em;*/
+}

@@ -1,0 +1,87 @@
+<h1>修改员工资料</h1>
+<div class="row">
+  <div class="large-6 columns">
+    <%= form_tag("/cms/employees/#{@employee.id}", method: :put) do %>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">邮件</label>
+          </div>
+          <div class="large-9 columns">
+            <input id="employee_email" name="employee[email]" type="text" value="<%=@employee.email%>">
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">姓名</label>
+          </div>
+          <div class="large-9 columns">
+            <input id="employee_real_name" name="employee[real_name]" type="text" value="<%=@employee.real_name%>">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">工号</label>
+          </div>
+          <div class="large-9 columns">
+            <input id="employee_work_number" name="employee[work_number]" type="text" value="<%=@employee.work_number%>">
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">出生年月</label>
+          </div>
+          <div class="large-9 columns">
+            <%= date_field_tag 'employee[birthday]', @employee.birthday %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">参加工作时间</label>
+          </div>
+          <div class="large-9 columns">
+            <%= date_field_tag 'employee[first_work_date]',  @employee.first_work_date %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">职位</label>
+          </div>
+          <div class="large-9 columns">
+            <ol>
+              <% @organizations.each do |organization| %>
+                  <li>
+                    <%= check_box_tag 'employee[organization_ids][]', organization.id ,@employee.organization_ids.include?(organization.id)  %>
+                    <%= organization.name %>
+                  </li>
+              <% end %>
+            </ol>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">入职时间</label>
+          </div>
+          <div class="large-9 columns">
+            <%= date_field_tag 'employee[entry_date]',  @employee.entry_date %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-3 columns">
+            <label class="text-right inline">状态</label>
+          </div>
+          <div class="large-9 columns">
+            <%= radio_button_tag("employee[status]", "1",checked = (@employee.status == 1) ) %>
+            <%= label_tag(:status, "在职") %>
+            <%= radio_button_tag("employee[status]", "0",checked = (@employee.status == 0) ) %>
+            <%= label_tag(:status, "离职") %>
+          </div>
+        </div>
+
+        <input class="button" name="commit" type="submit" value="确认">
+    <% end %>
+  </div>
+</div>

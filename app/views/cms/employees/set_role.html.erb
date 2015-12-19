@@ -1,0 +1,10 @@
+设置用户<%= raw @employee.real_name %>的角色
+<%= form_tag('/cms/employees/set_role', method: :post) do %>
+    <%= hidden_field_tag 'set_role[employee_id]', @employee.id %>
+    所有角色：
+    <% @roles.each do |role| %>
+        <%= check_box_tag 'set_role[role_ids][]', role.id ,@employee.role_ids.include?(role.id)  %> <%= role.name %>
+    <% end %>
+    <input type="submit" value="提交">
+<% end %>
+

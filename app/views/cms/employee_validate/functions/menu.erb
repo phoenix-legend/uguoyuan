@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>menu</title>
+  <%= stylesheet_link_tag "/dtree/dtree" %>
+  <script type="text/javascript" src="/dtree/dtree.js"></script>
+</head>
+<body style="background:#F1F1F1">
+<div class="dtree">
+  <div name="d" id="d">
+  </div>
+</div>
+</body>
+
+<script>
+    d = new dTree('d');
+//    d.add(1, -1, '管理平台');
+    <%current_user.functions.each do |m|%>
+        d.add(<%=m.id%>,<%=m.parent_id%>,'<%=m.title%>','<%=m.page_url%>','','mainFrame');
+    <%end%>
+
+    d.add(-4, 1, '修改密码', '/cms/employee_validate/functions/modify_password', '', 'mainFrame');
+    d.add(-3, 1, '注销', '/cms/employee_validate/functions/logout', '', '_parent');
+    document.write(d);
+</script>
+</html>

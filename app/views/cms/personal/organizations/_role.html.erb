@@ -1,0 +1,8 @@
+<tr>
+  <td>
+    <%= role.name %>
+  </td>
+  <td>
+    <%= check_box_tag 'set_roles[roles_id][]', role.id ,@organization.role_ids.include?(role.id)  %>
+  </td>
+</tr>

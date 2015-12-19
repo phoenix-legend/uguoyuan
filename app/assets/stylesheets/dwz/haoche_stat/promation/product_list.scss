@@ -1,0 +1,46 @@
+.table_content{
+  $table_color: #f5f5f5;
+  $red_number: #ff0000;
+  border-collapse:collapse;
+  color: #808080;
+  font-size: 14px;
+  text-align: left;
+  .title{
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    font-size: 17px;
+    font-family: "microsoft yahei";
+    color: #000000;
+    th{
+      padding: 0 10px 0 10px;
+    }
+  }
+  img{
+    width: 90%;
+  }
+
+  td{
+    padding: 10px 2% 0 2%;
+    white-space: pre-line;
+  }
+
+  td:nth-child(5){
+    text-align: center;
+  }
+
+  tr:nth-child(2n+1){
+    background-color: $table_color;
+  }
+
+  .big-red{
+    font-size: 24px;
+    color: $red_number;
+  }
+
+  .jijiangfabu{
+    color: $red_number;
+  }
+
+}
+

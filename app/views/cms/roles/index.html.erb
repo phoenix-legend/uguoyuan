@@ -1,0 +1,27 @@
+<div>
+  <%= get_notice_str true %>
+</div>
+<%= link_to '添加一个角色', new_cms_role_path ,html_options = {:class => "button"} %>
+<table>
+  <thead>
+    <tr>
+      <th>角色名称</th>
+      <th colspan="2">操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @roles.each do |role| %>
+      <tr>
+        <td><%= role.name %></td>
+        <td><%= link_to("修改", action: :edit,  id: role.id) %></td>
+        <td><%= link_to("权限设置", action: :set_functions,  id: role.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+

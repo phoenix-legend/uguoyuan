@@ -1,0 +1,11 @@
+设置角色<%= @role.name %>的权限
+<%= form_tag('/cms/roles/set_functions', method: :post) do %>
+    <%= hidden_field_tag 'set_function[role_id]', @role.id %>
+    所有角色：
+    <%= render :partial => "function_list", :locals => {:functions => @top_functions.all,
+                                                        :role => @role
+    } %>
+
+    <input type="submit" value="提交">
+<% end %>
+

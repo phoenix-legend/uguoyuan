@@ -1,0 +1,16 @@
+<%=form_tag("/cms/personal/organizations/#{@organization.id}/commit_roles",:method => :post) do |f|%>
+    <table>
+      <thead>
+      <th>
+        角色名称
+      </th>
+      <th>
+       操作
+      </th>
+      </thead>
+      <tbody>
+      <%=render :partial => "/cms/personal/organizations/role", :collection => @roles %>
+      </tbody>
+    </table>
+    <input type="submit" name="commit" class="button" value="确定">
+<% end %>

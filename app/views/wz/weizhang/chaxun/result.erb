@@ -1,0 +1,29 @@
+<div class="top_green" style="margin-bottom: 0px;">
+  <span class="top_green_title">交通违章查询</span>
+</div>
+<div class="body_background">
+  <div class="show_title huawenheiti_xiti">
+    共有<span class="weizhang_number"><%= @result.length %></span>条违章记录
+    <img style="margin-left:7px;" src="/images/wei.png" height="21px" width="21px"/>
+  </div>
+
+  <%@result.each do |result|
+  time = Time.parse(result.when)
+  %>
+
+  <div class="weizhang_content">
+    <div class="weizhang_content_time">
+      <%= time.year %>年<%= time.month %>月<%= time.day %>日 <%=time.to_date.chinese_week_day%> <%=time.hour%>:<%=time.min%>
+    </div>
+
+    <div class="weizhang_content_place huawenheiti">
+      <%= result.where %>
+    </div>
+
+    <div class="huawenheiti_xiti">
+      <%= result.why %>
+    </div>
+  </div>
+
+  <%end%>
+</div>

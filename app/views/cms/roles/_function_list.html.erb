@@ -1,0 +1,12 @@
+<% functions.each do |function| %>
+    <div>
+      <%= check_box_tag 'set_function[function_ids][]', function.id ,role.function_ids.include?(function.id)  %> <%= function.title %>
+    </div>
+    <% if function.children.all.length == 0 %>
+    <% else %>
+        <%= render :partial => "function_list", :locals => {:functions => function.children.all,
+                                                            :role=> role}
+        %>
+    <% end %>
+<% end %>
+

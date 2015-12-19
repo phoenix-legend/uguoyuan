@@ -1,0 +1,75 @@
+.middle1 {
+  height: 110px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  .area{
+    width: 25%;
+    margin-left: 5%;
+    margin-right: 3%;
+    float: left;
+    .image{
+      width: 30%;
+      float: left;
+    }
+    .text{
+      width: 70%;
+      float: left;
+      .title{
+        font-size: 20px;
+        font-family: "SimHei";
+      }
+      .content{
+        margin-top: 10px;
+        font-size: 14px;
+        color: #666666;
+      }
+    }
+  }
+}
+
+.middle2{
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  .small_title{
+    height: 20px;
+    border-left: #f05a23 solid 2px;
+    font-size: 20px;
+    color: #666666;
+    line-height: 20px;
+    padding-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .icons{
+   .icon{
+     width: 20%;
+     float: left;
+     padding-right: 5%;
+     .image{
+       float: left;
+       width: 23%;
+       .image_1{
+        width: 100%;
+       }
+     }
+     .text{
+       float: left;
+       height: 60px;
+       line-height: 60px;
+       font-size: 19px;
+     }
+   }
+  }
+  .tel{
+    font-size: 18px;
+    padding-left: 15px;
+    .phone{
+      float: left;
+      width: 40%;
+    }
+    .email{
+      float: left;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+
+<h3>对产品[<%= @comment.product.name rescue '' %>]的评论进行更改</h3>
+
+<%= form_tag "/cms/order_system/comments/#{@comment.id}", method: :patch do %>
+
+    <%= render 'comment' %>
+
+<% end %>

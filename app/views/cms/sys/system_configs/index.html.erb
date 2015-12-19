@@ -1,0 +1,26 @@
+<h1>自定义配置信息列表</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>关键字</th>
+      <th>值</th>
+      <th colspan="2">操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @system_config.each do |system_config| %>
+      <tr>
+        <td><%= system_config.k %></td>
+        <td><%= system_config.v %></td>
+        <td><%= link_to '显示', :action => :show, :id => system_config.id %></td>
+        <td><%= link_to '编辑', :action => :edit, :id => system_config.id  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新建配置', new_cms_sys_system_config_path %>

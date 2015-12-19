@@ -1,0 +1,8 @@
+<h1>创建一个角色</h1>
+
+<%=form_tag('/cms/roles', method: :post) do%>
+  角色名称： <input type="text" name="role[name]">
+  <input type="submit">
+<%end%>
+
+

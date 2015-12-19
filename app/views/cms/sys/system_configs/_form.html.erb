@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="large-4 columns end">
+    <%= simple_form_for([:cms, :sys, @system_config]) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-inputs">
+          <%= f.input :k, :label => "Key" %>
+          <%= f.input :v, :label => "value" %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.button :submit,"提交"  %>
+        </div>
+    <% end %>
+  </div>
+</div>

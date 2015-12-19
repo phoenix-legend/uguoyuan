@@ -1,0 +1,75 @@
+div#background{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  z-index:-1;
+}
+div#background > img {
+  height:100%;
+  width:100%;
+  border:0;
+}
+
+.required {
+  color: #ff0000;
+  font-size: 20px;
+}
+
+.diff {
+  position: absolute;
+}
+
+.fake.diff{
+  background-color:white;
+  width:450px;
+  disabled:disabled;
+  z-index: 0
+}
+
+.upload.diff{
+  color: #000;
+  top:10px;
+  left:470px;
+  z-index: 0
+}
+
+.file.diff{
+  opacity:0;
+  width:500px;
+  height: 27px;
+  z-index: 1
+}
+
+.api_title {
+//  font-size: 15px;
+  font-weight:bold;
+}
+
+.api_content {
+  margin-left: 1.2em;
+}
+
+.api_field_name {
+//  font-size: 12px;
+  font-weight:bold;
+}
+
+.api_field_content {
+  font-size: 12px;
+  word-break:break-all;
+  margin-left: 1.2em;
+}
+
+.api_field_border {
+  border-bottom: dotted;
+  border-bottom-width: 1px;
+}
+
+.api_title_border {
+  border-bottom: dotted;
+  border-bottom-width: 1px;
+}
+
+
