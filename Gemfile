@@ -6,7 +6,6 @@ ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
-gem 'mysql2'
 
 #warning...
 gem 'sass-rails', '~> 4.0.3'
@@ -28,12 +27,12 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
-
+gem 'mysql2', '0.3.18'
 # Use unicorn as the app server
- gem 'unicorn'
+gem 'unicorn'
 
 gem 'nokogiri'
-gem 'eric_tools', '~> 0.0.6'
+
 gem 'rest-client'
 gem "multi_xml"
 

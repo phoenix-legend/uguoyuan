@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   end
 
   get '/cms', to: 'cms/employee_validate/functions#login'
+  get '', to: 'welcome#index'
 
   mount ::EricWeixin::Engine, at: "eric_weixin"
 
