@@ -6,9 +6,7 @@ class ::Weixin::Process
                 else
                   options[:EventKey]
                 end
-    case
-
-    end
+    
     true
   end
 
