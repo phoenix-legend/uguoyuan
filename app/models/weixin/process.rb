@@ -1,6 +1,14 @@
 class ::Weixin::Process
   #用户订阅回调
   def self.subscribe options, is_new
+    event_key = if options[:EventKey].match /qrscene_/
+                  options[:event_key][8..1000]
+                else
+                  options[:EventKey]
+                end
+    case
+
+    end
     true
   end
 
@@ -52,6 +60,10 @@ class ::Weixin::Process
   end
 
   def self.scan_event content, options
+    case content
+      when 'qrscene_yifengxin_hongbao'
+        SelledProductRedpack.send_main_redpack options
+    end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
     #                                                        message_type: 'text',
@@ -71,7 +83,23 @@ class ::Weixin::Process
     ''
   end
 
+=begin
+options 样例
+{:ToUserName=>"gh_66b815c2c7c1",
+ :FromUserName=>"oE46Bjg-vnjzkkGvA_cr7VO-VD9s",
+ :CreateTime=>"1450923945",
+ :MsgType=>"event",
+ :Event=>"merchant_order",
+ :OrderId=>"10268644838038955908",
+ :OrderStatus=>"2",
+ :ProductId=>"pE46BjpxJ_7k_H_LmIr4uWPQUI2Q",
+ :SkuInfo=>"$适应人群:$青年;1075741873:1079742359;1075781223:1079852461"}
+=end
   def self.get_merchant_order options
+    # 根据OrderID查找到Order订单信息。然后分配货品信息(selled_products)以及红包分配记录。
+    SelledProduct.create_products_by_order_id options[:OrderId]
+    # 发首单红包
+    SelledProductRedpack.send_first_order_redpack options
     true
   end
 
@@ -90,7 +118,6 @@ class ::Weixin::Process
   #客服会话结束
   # 这里可用于让用户给客服打分等。
   def self.kv_close_session options
-
     true
   end
 

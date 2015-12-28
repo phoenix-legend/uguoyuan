@@ -1,7 +1,6 @@
 ##
 #  微信自动回复函数调用。
 #  只需要把名字配置到匹配表中即可向用户返回该函数返回的信息。#
-
 module Weixin::WeixinAutoReplyFunctions
   #  测试使用。
   def self.get_last_10_baijiayan options
