@@ -1,0 +1,20 @@
+<div class="background">
+  <div class="erweima">
+    <img src="<%= @url %>"/>
+  </div>
+  <div class="description">
+
+    <div class="share">
+      <% if @num == 0 %>
+          二维码推荐名额已用完，关注进来的好友将不能得到见面礼。 好友见面礼一般在您下完订单以后，会重新分配给您。
+      <% else %>
+          请将此二维码分享给您的好友，您的好友将可以收到来自U果源的见面礼。
+      <% end %>
+
+    </div>
+    <div class="notice">
+      当前您的二维码还可以邀请<%= @num %>个好友。
+    </div>
+  </div>
+
+</div>

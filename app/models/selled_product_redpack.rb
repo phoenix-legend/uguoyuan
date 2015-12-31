@@ -14,23 +14,38 @@ class SelledProductRedpack < ActiveRecord::Base
     spr
   end
 
+  def self.get_bak_redpack_number order_owner_openid
+    SelledProductRedpack.where(redpack_type: 'back', order_owner_openid: order_owner_openid, send_status: 0).count
+  end
 
+=begin
+{:ToUserName=>"gh_66b815c2c7c1",
+ :FromUserName=>"oE46Bjjkndd2bYgTdTmlrKjFTqoQ",
+ :CreateTime=>"1451372784",
+ :MsgType=>"event",
+ :Event=>"subscribe",
+ :EventKey=>"qrscene_oE46Bjg-vnjzkkGvA_cr7VO-VD9s",
+ :Ticket=>
+  "gQFR8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzduWEwzU1htTFFaVUZFOEZibDNYAAIEF5zyVQMEAAAAAA=="}
+=end
   def self.send_bak_redpack options, order_owner_openid
     tuijianren = EricWeixin::WeixinUser.where(openid: order_owner_openid).first
-    spr = SelledProductRedpack.where(redpack_type: 'main', order_owner_openid: order_owner_openid, send_status: 0 ).order(id: :asc).first
+    spr = SelledProductRedpack.where(redpack_type: 'back', order_owner_openid: order_owner_openid, send_status: 0 ).order(id: :asc).first
     if !spr.blank?
       spr.send_redpack options[:FromUserName]
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                              openid: options[:FromUserName],
                                                              message_type: 'text',
-                                                             data: {:content => SystemConfig.find_or_create_by!(k: "朋友推荐关注后有红包：").v||"客官，多亏#{tuijianren.nickname}的引见，见面礼已双手奉上，请笑纳。现在购买还会有首单红包即刻奉上，事不宜迟，赶紧下手。
-U果源的水果都是纯天然，无后期加工，价格公道，有需求可随时找我，U果源一直都在你身边。"}
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "朋友推荐关注后有红包：").v||"客官，感谢#{tuijianren.nickname}的引见，见面礼已双手奉上。即日起在U果源下单还有首单红包等你来拿！抓紧机会，数量有限。
+U果源的水果都来自天然、无污染的农果之家，新鲜健康经济实惠，有任何请咨询微信客服，我们一直都在您身边。"}
     else
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                              openid: options[:FromUserName],
                                                              message_type: 'text',
-                                                             data: {:content => SystemConfig.find_or_create_by!(k: "朋友推荐关注后无红包：").v||"客官你好，#{tuijianren.nickname}的引见红包名额已用完。
-不过没关系，现在购买就会有首单红包即刻奉上。U果源的水果都是纯天然，无后期加工，价格也公道，尝一个吧。有需求可随时找我，U果源一直都在你身边。"}
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "朋友推荐关注后无红包：").v||"客官你好，好友#{tuijianren.nickname}的推荐见红包名额已用完。
+想和TA一样分享红包吗？即日起在U果源下单还有首单红包等你来拿！
+U果源的水果都来自天然、无污染的农果之家，新鲜健康经济实惠，有任何请咨询微信客服，我们一直都在您身边。
+"}
     end
   end
 
@@ -42,21 +57,23 @@ U果源的水果都是纯天然，无后期加工，价格公道，有需求可�
   def self.send_main_redpack options
     # 发送首次红包
     spr = SelledProductRedpack.where(redpack_type: 'main', order_owner_openid: options[:FromUserName], send_status: 0 ).first
+    public_account = EricWeixin::PublicAccount.where(weixin_number: options[:ToUserName]).first
     if !spr.blank?
       spr.send_redpack options[:FromUserName]
-      sleep(1)
       #发送信息
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                              openid: options[:FromUserName],
                                                              message_type: 'text',
-                                                             data: {:content => SystemConfig.find_or_create_by!(k: "开箱红包收到后提示：").v||'恭喜你，您已抽到开箱红包，非常感谢您的支持。
-U果源所有水果都尽可能保持在农村果园的原始状态，这样更有利于保鲜。有问题请在微信中直接留言，客服小妹将尽快与您沟通。'}
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "开箱红包收到后提示：").v||"恭喜你抽到了开箱红包！我们还为你准备了<a href='#{public_account.host_name_with_schema}/welcome/share_ewm?oid=#{options[:FromUserName]}'>分享红包</a>，叫上好友一起来扫码享惊喜吧！
+
+U果源为使水果更新鲜、口感更好，尽力保留了水果的原始状态。好吃记得常来呀，有任何需求请在微信中留言，客服小妹将尽快与您沟通。"}
     else
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                              openid: options[:FromUserName],
                                                              message_type: 'text',
-                                                             data: {:content => SystemConfig.find_or_create_by!(k: "开箱红包扫描多次没有红包提示：").v||'抽奖资格已用完，请慢慢享用你的水果...
-U果源一直在你身边，有需求随时找我哟。'}
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "开箱红包扫描多次没有红包提示：").v||'抽奖次数已用完...
+如果您觉得好吃，记得常来~更多开箱红包等你来抢！
+U果源一直在您身边，有需求随时微我哟。'}
     end
   end
 
@@ -69,19 +86,19 @@ U果源一直在你身边，有需求随时找我哟。'}
     # 发送首单红包
     spr = SelledProductRedpack.where(redpack_type: 'first', order_owner_openid: options[:FromUserName], send_status: 0 ).first
      if !spr.blank?
-       spr.send_redpack order.openid
-       sleep(1)
+       spr.send_redpack options[:FromUserName]
        #发送信息
        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                               openid: options[:FromUserName],
                                                               message_type: 'text',
                                                               data: {:content => SystemConfig.find_or_create_by!(k: "收到首单红包后文案").v||'首单红包礼物已奉上，非常感谢您的支持。
+U果源发货地点一般在略偏远的果园，为了能吃到最新鲜的水果，请耐心等待。
 U果源的一路成长离不开您的关注，任何问题请在微信公众账号直接留言，客服小妹将尽快与您沟通。'}
      else
        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                               openid: options[:FromUserName],
                                                               message_type: 'text',
-                                                              data: {:content => SystemConfig.find_or_create_by!(k: "订单付款后文案-非首单").v||'非常感谢您的支持，U果源的一路成长离不开您的关注，任何问题请在微信公众账号直接留言，客服小妹将尽快与您沟通。'}
+                                                              data: {:content => SystemConfig.find_or_create_by!(k: "订单付款后文案-非首单").v||'您的订单果农伯伯已经收到！这就给你准备发货...'}
      end
   end
 
@@ -103,6 +120,7 @@ U果源的一路成长离不开您的关注，任何问题请在微信公众账�
       self.really_amount = self.plan_amount
       self.weixin_redpack_id= redpack_order.id
       self.send_status = 1
+      self.receive_openid = openid
       self.save!
       sp = self.selled_product
       sp.send_redpack_number += 1
@@ -128,7 +146,7 @@ U果源的一路成长离不开您的关注，任何问题请在微信公众账�
       when 'redpack_act_name'
         SystemConfig.find_or_create_by!(k: "redpack_act_name_#{self.redpack_type}").v||'首单送礼'
       when 'redpack_remark'
-        SystemConfig.find_or_create_by!(k: "redpack_remark_#{self.redpack_type}").v||'别忘了分享好友哟'
+        SystemConfig.find_or_create_by!(k: "redpack_remark_#{self.redpack_type}").v||'别忘了把U果源推荐给好友哦.'
       when 'redpack_send_name'
         SystemConfig.find_or_create_by!(k: "redpack_send_name_#{self.redpack_type}").v||'U果源'
     end

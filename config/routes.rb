@@ -43,6 +43,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :welcome do
+    collection do
+      get :share_ewm
+    end
+  end
+
   get '/cms', to: 'cms/employee_validate/functions#login'
   get '', to: 'welcome#index'
 

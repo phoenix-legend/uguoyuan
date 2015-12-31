@@ -1,12 +1,29 @@
 class ::Weixin::Process
   #用户订阅回调
   def self.subscribe options, is_new
+    pp options
     event_key = if options[:EventKey].match /qrscene_/
-                  options[:event_key][8..1000]
+                  options[:EventKey][8..1000]
                 else
                   options[:EventKey]
                 end
-    
+    # 处理朋友推荐，一般会用openid做为二维码参数，所以长度一般会在25位以上，先使用位数过滤一遍，可减少数据库查询负载。
+    if event_key.length > 25
+      weixin_user = EricWeixin::WeixinUser.where(openid: event_key).first
+      SelledProductRedpack.delay.send_bak_redpack options, weixin_user.openid unless weixin_user.blank?
+      return true
+    end
+
+    # 处理用户扫一封信二维码进来的情况...   如果您觉得好吃，记得常来~更多开箱红包等你来抢！ U果源一直在您身边，有需求随时微我哟。
+    case event_key
+      when /yifengxin_hongbao/
+        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
+                                                               openid: options[:FromUserName],
+                                                               message_type: 'text',
+                                                               data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
+
+    end
+
     true
   end
 
@@ -59,15 +76,19 @@ class ::Weixin::Process
 
   def self.scan_event content, options
     case content
-      when 'qrscene_yifengxin_hongbao'
-        SelledProductRedpack.send_main_redpack options
+      when 'yifengxin_hongbao'
+        SelledProductRedpack.delay.send_main_redpack options
+
+      # 还需要考虑用户再次扫朋友二维码进来的场景........
+
+
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
     #                                                        message_type: 'text',
     #                                                        data: {:content => "来自#{options[:EventKey]}的朋友，你好"},
     #                                                        message_id: options[:MsgId]
-    true
+    return true
   end
 
   #获取到经纬度
@@ -92,13 +113,15 @@ options 样例
  :OrderStatus=>"2",
  :ProductId=>"pE46BjpxJ_7k_H_LmIr4uWPQUI2Q",
  :SkuInfo=>"$适应人群:$青年;1075741873:1079742359;1075781223:1079852461"}
+
+这个接口有些变态，如果服务器在5秒之内没有响应，它会再发一次请求过来。所以，必须有缓存介入。
 =end
   def self.get_merchant_order options
     # 根据OrderID查找到Order订单信息。然后分配货品信息(selled_products)以及红包分配记录。
-    SelledProduct.create_products_by_order_id options[:OrderId]
+    SelledProduct.delay.create_products_by_order_id options[:OrderId]
     # 发首单红包
-    SelledProductRedpack.send_first_order_redpack options
-    true
+    SelledProductRedpack.delay.send_first_order_redpack options
+    return true
   end
 
 

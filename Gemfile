@@ -39,8 +39,16 @@ gem "multi_xml"
 gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
 gem "will_paginate-foundation"
-gem 'eric_weixin', '~> 0.3.1'
+gem 'eric_weixin', '~> 0.3.2'
 gem 'eric_tools', '~> 0.0.6'
 gem 'tinymce-rails'
 gem 'jquery-ui-rails'
 gem 'simple_form'
+# gem 'sidekiq'
+# gem 'redis-namespace'
+# gem 'sinatra'
+
+# gem 'delayed_job'
+gem 'daemons'  # delayed_job 使用的延时进程
+
+gem 'delayed_job_active_record'

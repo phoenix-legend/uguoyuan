@@ -2,6 +2,8 @@ class SelledProduct < ActiveRecord::Base
   def self.create_products_by_order_id order_id
     SelledProduct.transaction do
       order = EricWeixin::Xiaodian::Order.where(order_id: order_id).first
+      products = SelledProduct.where weixin_xiaodian_order_id: order.id
+      return unless products.blank?  # 有时TX会请求过来两次，这里保证每个订单只处理一次。
       order_count = EricWeixin::Xiaodian::Order.where(openid: order.openid).count
       order.product_count.times { |index|
         # 先创建购买的产品
