@@ -2,11 +2,17 @@ class ::Weixin::Process
   #用户订阅回调
   def self.subscribe options, is_new
     pp options
-    event_key = if options[:EventKey].match /qrscene_/
-                  options[:EventKey][8..1000]
+    event_key = if options[:EventKey].blank?
+                  if options[:EventKey].match /qrscene_/
+                    options[:EventKey][8..1000]
+                  else
+                    options[:EventKey]
+                  end
                 else
-                  options[:EventKey]
+                  ''
                 end
+
+
     # 处理朋友推荐，一般会用openid做为二维码参数，所以长度一般会在25位以上，先使用位数过滤一遍，可减少数据库查询负载。
     if event_key.length > 25
       weixin_user = EricWeixin::WeixinUser.where(openid: event_key).first
@@ -78,10 +84,6 @@ class ::Weixin::Process
     case content
       when 'yifengxin_hongbao'
         SelledProductRedpack.delay.send_main_redpack options
-
-      # 还需要考虑用户再次扫朋友二维码进来的场景........
-
-
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
