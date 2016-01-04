@@ -29,6 +29,15 @@ class SelledProductRedpack < ActiveRecord::Base
   "gQFR8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzduWEwzU1htTFFaVUZFOEZibDNYAAIEF5zyVQMEAAAAAA=="}
 =end
   def self.send_bak_redpack options, order_owner_openid
+    if options[:is_new] !=  true
+      EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
+                                                             openid: options[:FromUserName],
+                                                             message_type: 'text',
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "老会员扫描附加红包：").v||"客官，请手下留情，红包留给新来的朋友吧。购买产品后也是可以领红包的。"}
+
+      return
+    end
+
     tuijianren = EricWeixin::WeixinUser.where(openid: order_owner_openid).first
     spr = SelledProductRedpack.where(redpack_type: 'back', order_owner_openid: order_owner_openid, send_status: 0 ).order(id: :asc).first
     if !spr.blank?
@@ -82,6 +91,7 @@ U果源一直在您身边，有需求随时微我哟。'}
   # 发送指定用户的首单红包，发送后再补一条信息。
   # 参数为TX回传回来的参数，直接传过来。
   # 这里会用到两个参数： FromUserName    ToUserName
+  SelledProductRedpack.send_first_order_redpack FromUserName: weixin_user.openid, ToUserName: 'gh_5734a2ca28e5'
   def self.send_first_order_redpack options
     # 发送首单红包
     spr = SelledProductRedpack.where(redpack_type: 'first', order_owner_openid: options[:FromUserName], send_status: 0 ).first

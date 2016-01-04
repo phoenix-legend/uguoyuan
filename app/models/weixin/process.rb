@@ -2,6 +2,7 @@ class ::Weixin::Process
   #用户订阅回调
   def self.subscribe options, is_new
     pp options
+    options[:is_new] = is_new
     event_key = unless options[:EventKey].blank?
                   if options[:EventKey].match /qrscene_/
                     options[:EventKey][8..1000]
