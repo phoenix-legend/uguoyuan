@@ -91,7 +91,7 @@ U果源一直在您身边，有需求随时微我哟。'}
   # 发送指定用户的首单红包，发送后再补一条信息。
   # 参数为TX回传回来的参数，直接传过来。
   # 这里会用到两个参数： FromUserName    ToUserName
-  SelledProductRedpack.send_first_order_redpack FromUserName: weixin_user.openid, ToUserName: 'gh_5734a2ca28e5'
+  # SelledProductRedpack.send_first_order_redpack FromUserName: weixin_user.openid, ToUserName: 'gh_5734a2ca28e5'
   def self.send_first_order_redpack options
     # 发送首单红包
     spr = SelledProductRedpack.where(redpack_type: 'first', order_owner_openid: options[:FromUserName], send_status: 0 ).first
