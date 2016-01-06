@@ -1,6 +1,41 @@
 class SelledProductRedpack < ActiveRecord::Base
   belongs_to :selled_product
 
+  # 依靠年会发红包，只要扫二维码都可以领取
+  def self.send_yikao_redpack openid
+      red_pack_options = {}
+      red_pack_options[:wishing] = '祝大家年会玩得开心'
+      red_pack_options[:client_ip] = '101.231.116.38'
+      red_pack_options[:act_name] = '依靠年会红包'
+      red_pack_options[:remark] = '玩得开心...'
+      red_pack_options[:send_name] = 'U果源'
+      red_pack_options[:re_openid] = openid
+      red_pack_options[:total_amount] = self.get_rand_number_amount   #金额随机
+
+      # 红包将只会在1月8日和1月9日两天生效
+      return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
+      return '依靠户外红包领取已结束' unless Date.parse('2016-01-09') < Date.today
+
+      # 依据群里的人数，红包发送241个。
+      return '红包已发完' unless EricWeixin::WeixinUser.where(remark: '依靠红包已领').count > 241
+      # 一个人只能领一个
+      current_user = EricWeixin::WeixinUser.where(openid: openid).first
+      return '请手下留情，给后面兄弟一些机会' if current_user.remark == '依靠红包已领'
+
+      redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
+      current_user.remark = '依靠红包已领'
+      current_user.save!
+
+      if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
+        pp "给 #{openid} 发红包完成，金额 #{self.plan_amount}："
+        current_user.member_info_id = 55
+        current_user.save!
+      else  #发送失败，先记录名称，后续补发
+        pp "给 #{openid} 发红包失败，失败原因是："
+        pp redpack_order
+      end
+  end
+
   # 创建红包待发列表
   def self.create_selled_product_red_pack selled_product, type
     spr = SelledProductRedpack.new selled_product_id: selled_product.id,
@@ -81,12 +116,11 @@ U果源的水果都来自天然、无污染的农果之家，新鲜健康经济�
                                                            url: "#{public_account.host_name_with_schema}/welcome/share_ewm?oid=#{options[:FromUserName]}",
                                                            public_account_id: 1,
                                                            data: {
-                                                               first: {value: '恭喜你抽到了开箱红包！我们还为你准备了分享红包，叫上好友一起来扫码享惊喜吧（点击这里领取）!'},
+                                                               first: {value: '恭喜你抽到了开箱红包！我们还为你准备了分享红包，点击这里领取吧'},
                                                                keyword1: {value: '随机'},
                                                                keyword2: {value: '3天内'},
-                                                               remark: {value: 'U果源为使水果更新鲜、口感更好，尽力保留了水果的原始状态。好吃记得常来呀，有任何需求请在微信中留言，客服小妹将尽快与您沟通。'}
+                                                               remark: {value: 'U果源为保留更好口感，尽力保留了水果的原始状态。好吃记得常来...'}
                                                            }
-
 
     else
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
