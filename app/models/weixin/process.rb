@@ -31,14 +31,6 @@ class ::Weixin::Process
       when /yikao_nianhui_2016/
         pp '依靠2016年会红包群发功能'
         openid = options[:FromUserName]
-        red_pack_options = {:wishing => '祝大家年会玩得开心',
-                            :client_ip => '101.231.116.38',
-                            :act_name => '依靠年会红包',
-                            :remark => '玩得开心...',
-                            :send_name => 'U果源',
-                            :re_openid => openid,
-                            :total_amount => SelledProductRedpack.get_rand_number_amount }  #金额随机
-
 
         return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
         return '依靠户外红包领取已结束' unless Date.parse('2016-01-09') < Date.today
@@ -111,13 +103,6 @@ class ::Weixin::Process
         SelledProductRedpack.delay.send_main_redpack options
       when /yikao_nianhui_2016/
         pp '依靠2016年会红包群发功能'
-        red_pack_options = {:wishing => '祝大家年会玩得开心',
-                            :client_ip => '101.231.116.38',
-                            :act_name => '依靠年会红包',
-                            :remark => '玩得开心...',
-                            :send_name => 'U果源',
-                            :re_openid => options[:FromUserName],
-                            :total_amount => SelledProductRedpack.get_rand_number_amount }  #金额随机
 
         openid = options[:FromUserName]
         return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
