@@ -37,7 +37,7 @@ class ::Weixin::Process
                             :remark => '玩得开心...',
                             :send_name => 'U果源',
                             :re_openid => openid,
-                            :total_amount => self.get_rand_number_amount }  #金额随机
+                            :total_amount => SelledProductRedpack.get_rand_number_amount }  #金额随机
 
 
         return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
@@ -117,7 +117,7 @@ class ::Weixin::Process
                             :remark => '玩得开心...',
                             :send_name => 'U果源',
                             :re_openid => options[:FromUserName],
-                            :total_amount => self.get_rand_number_amount }  #金额随机
+                            :total_amount => SelledProductRedpack.get_rand_number_amount }  #金额随机
 
         openid = options[:FromUserName]
         return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
