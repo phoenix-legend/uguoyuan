@@ -24,10 +24,12 @@ class ::Weixin::Process
     # 处理用户扫一封信二维码进来的情况...   如果您觉得好吃，记得常来~更多开箱红包等你来抢！ U果源一直在您身边，有需求随时微我哟。
     case event_key
       when /yifengxin_hongbao/
-        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
-                                                               openid: options[:FromUserName],
-                                                               message_type: 'text',
-                                                               data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
+        EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: options[:ToUserName],
+                                                                     openid: options[:FromUserName],
+                                                                     message_type: 'text',
+                                                                     data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
+      when /yikao_nianhui_2016/
+        pp '依靠2016年会'
 
     end
 
