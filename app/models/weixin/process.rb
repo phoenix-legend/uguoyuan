@@ -108,6 +108,28 @@ class ::Weixin::Process
     case content
       when 'yifengxin_hongbao'
         SelledProductRedpack.delay.send_main_redpack options
+      when /yikao_nianhui_2016/
+        pp '依靠2016年会红包群发功能'
+        red_pack_options = {:wishing => '祝大家年会玩得开心',
+                            :client_ip => '101.231.116.38',
+                            :act_name => '依靠年会红包',
+                            :remark => '玩得开心...',
+                            :send_name => 'U果源',
+                            :re_openid => openid,
+                            :total_amount => self.get_rand_number_amount }  #金额随机
+
+        openid = options[:FromUserName]
+        return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
+        return '依靠户外红包领取已结束' unless Date.parse('2016-01-09') < Date.today
+
+        # 依据群里的人数，红包发送241个。
+        return '红包已发完' unless EricWeixin::WeixinUser.where(remark: '依靠红包已领').count > 241
+        # 一个人只能领一个
+        current_user = EricWeixin::WeixinUser.where(openid: openid).first
+        return '请手下留情，给后面兄弟一些机会' if current_user.remark == '依靠红包已领'
+
+        SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
+        return '红包正在排队发送，请稍安勿燥...'
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
