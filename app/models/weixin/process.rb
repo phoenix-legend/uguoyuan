@@ -30,6 +30,7 @@ class ::Weixin::Process
                                                                      data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
       when /yikao_nianhui_2016/
         pp '依靠2016年会红包群发功能'
+        openid = options[:FromUserName]
         red_pack_options = {:wishing => '祝大家年会玩得开心',
                             :client_ip => '101.231.116.38',
                             :act_name => '依靠年会红包',
@@ -38,7 +39,7 @@ class ::Weixin::Process
                             :re_openid => openid,
                             :total_amount => self.get_rand_number_amount }  #金额随机
 
-        openid = options[:FromUserName]
+
         return '依靠户外红包领取未开始' unless Date.parse('2016-01-05') > Date.today
         return '依靠户外红包领取已结束' unless Date.parse('2016-01-09') < Date.today
 
