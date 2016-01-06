@@ -48,7 +48,7 @@ class ::Weixin::Process
         current_user = EricWeixin::WeixinUser.where(openid: openid).first
         return '请手下留情，给后面兄弟一些机会' if current_user.remark == '依靠红包已领'
 
-        SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
+        SelledProductRedpack.delay.send_yikao_redpack options[:FromUserName] # 发红包
         return '红包正在排队发送，请稍安勿燥...'
     end
 
@@ -115,7 +115,7 @@ class ::Weixin::Process
                             :act_name => '依靠年会红包',
                             :remark => '玩得开心...',
                             :send_name => 'U果源',
-                            :re_openid => openid,
+                            :re_openid => options[:FromUserName],
                             :total_amount => self.get_rand_number_amount }  #金额随机
 
         openid = options[:FromUserName]
