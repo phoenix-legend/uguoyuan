@@ -173,7 +173,7 @@ class ::Weixin::Process
     #                                                        message_type: 'text',
     #                                                        data: {:content => "来自#{options[:EventKey]}的朋友，你好"},
     #                                                        message_id: options[:MsgId]
-    return 'hello'
+    return ''
   end
 
   #获取到经纬度
