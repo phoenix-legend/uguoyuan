@@ -53,7 +53,7 @@ class ::Weixin::Process
         end
 
 
-        # 依据群里的人数，红包发送241个。
+        # 依据群里的人数，红包发送245个。
         left_hb = EricWeixin::WeixinUser.where(phone: '13888889999').count
         if left_hb > 245
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
@@ -133,7 +133,7 @@ class ::Weixin::Process
         pp '依靠2016年会红包群发功能'
 
         openid = options[:FromUserName]
-        if Date.parse('2016-01-05') > Date.today
+        if Date.parse('2016-01-09') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: '依靠户外红包领取未开始'
@@ -150,7 +150,7 @@ class ::Weixin::Process
         # 依据群里的人数，红包发送241个。
 
         left_hb = EricWeixin::WeixinUser.where(phone: '13888889999').count
-        if left_hb > 241
+        if left_hb > 245
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: '红包已发完'
@@ -160,13 +160,13 @@ class ::Weixin::Process
         if current_user.phone == '13888889999'
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共241个"
+                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共245个"
         end
 
         SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共241个"
+                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共245个"
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
