@@ -22,7 +22,7 @@ class SelledProductRedpack < ActiveRecord::Base
       return '依靠户外红包领取已结束' if Date.parse('2016-01-09') < Date.today
 
       # 依据群里的人数，红包发送241个。
-      return '红包已发完' if EricWeixin::WeixinUser.where(phone: '13888889999').count > 241
+      return '红包已发完' if EricWeixin::WeixinUser.where(phone: '13888889999').count > 245
       # 一个人只能领一个
       current_user = EricWeixin::WeixinUser.where(openid: openid).first
       return '请手下留情，给后面兄弟一些机会' if current_user.phone == '13888889999'
