@@ -39,17 +39,17 @@ class ::Weixin::Process
         pp '依靠2016年会红包群发功能'
 
         openid = options[:FromUserName]
-        if Date.parse('2016-01-09') > Date.today
+        if Date.parse('2016-01-08') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外红包领取未开始'
+                                                                        Content: '依靠户外年会红包领取未开始'
 
         end
 
         if Date.parse('2016-01-09') < Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外红包领取已结束'
+                                                                        Content: '依靠户外年会红包领取已结束'
         end
 
 
@@ -58,7 +58,7 @@ class ::Weixin::Process
         if left_hb > 245
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '红包已发完'
+                                                                        Content: '依靠户外年会红包已发完'
         end
         # 一个人只能领一个
         current_user = EricWeixin::WeixinUser.where(openid: openid).first
@@ -133,7 +133,7 @@ class ::Weixin::Process
         pp '依靠2016年会红包群发功能'
 
         openid = options[:FromUserName]
-        if Date.parse('2016-01-09') > Date.today
+        if Date.parse('2016-01-08') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: '依靠户外红包领取未开始'
