@@ -29,12 +29,12 @@ class ::Weixin::Process
                                                                      message_type: 'text',
                                                                      data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
       when /yikao_nianhui_2016/
-#         EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: options[:ToUserName],
-#                                                                      openid: options[:FromUserName],
-#                                                                      message_type: 'text',
-#                                                                      data: {:content => 'U果源，把新鲜水果从果园直接送到您的手中。
-# 这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果，来这里就对了。
-# 年会的苹果，就来自U果源...对，就是这样的，大，脆，甜。
+        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
+                                                                     openid: options[:FromUserName],
+                                                                     message_type: 'text',
+                                                                     data: {:content => 'U果源，把新鲜水果从果园直接送到您的手中。
+这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果，来这里就对了。
+年会的苹果，就来自U果源...对，就是这样的，大，脆，甜。
 # '}
         pp '依靠2016年会红包群发功能'
 
