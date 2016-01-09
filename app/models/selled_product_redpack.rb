@@ -32,7 +32,7 @@ class SelledProductRedpack < ActiveRecord::Base
       current_user.save!
 
       if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
-        
+
         current_user.member_info_id = 55
         current_user.save!
       else  #发送失败，先记录名称，后续补发
