@@ -33,7 +33,10 @@ class ::Weixin::Process
                                                                      openid: options[:FromUserName],
                                                                      message_type: 'text',
                                                                      data: {:content => 'U果源，把新鲜水果从果园直接送到您的手中。
-这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果，买水果来这里就对了。'}
+
+这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果.
+
+买水果来这里就对了。'}
         pp 'J.C.2016年会红包群发功能'
 
         openid = options[:FromUserName]
