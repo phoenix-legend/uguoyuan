@@ -11,28 +11,26 @@ class SelledProductRedpack < ActiveRecord::Base
       red_pack_options = {}
       red_pack_options[:wishing] = '祝大家年会玩得开心'
       red_pack_options[:client_ip] = '101.231.116.38'
-      red_pack_options[:act_name] = '依靠户外年会红包'
+      red_pack_options[:act_name] = 'J.C.户外年会红包'
       red_pack_options[:remark] = '祝大家玩得开心...'
-      red_pack_options[:send_name] = '赞助商U果源'
+      red_pack_options[:send_name] = 'U果源'
       red_pack_options[:re_openid] = openid
       red_pack_options[:total_amount] = (rand 10) + 100   #金额随机
 
       # 红包将只会在1月8日和1月9日两天生效
-      return '依靠户外红包领取未开始' if Date.parse('2016-01-05') > Date.today
-      return '依靠户外红包领取已结束' if Date.parse('2016-01-09') < Date.today
+      return 'J.C.户外红包领取已结束' if Date.parse('2016-01-09') < Date.today
 
       # 依据群里的人数，红包发送241个。
-      return '红包已发完' if EricWeixin::WeixinUser.where(phone: '13888889999').count > 245
+      return '红包已发完' if EricWeixin::WeixinUser.where(phone: '13888889990').count > 245
       # 一个人只能领一个
       current_user = EricWeixin::WeixinUser.where(openid: openid).first
-      return '请手下留情，给后面兄弟一些机会' if current_user.phone == '13888889999'
+      return '请手下留情，给后面兄弟一些机会' if current_user.phone == '13888889990'
 
       redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
-      current_user.phone = '13888889999'
+      current_user.phone = '13888889990'
       current_user.save!
 
       if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
-
         current_user.member_info_id = 55
         current_user.save!
       else  #发送失败，先记录名称，后续补发

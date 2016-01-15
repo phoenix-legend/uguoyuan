@@ -33,45 +33,43 @@ class ::Weixin::Process
                                                                      openid: options[:FromUserName],
                                                                      message_type: 'text',
                                                                      data: {:content => 'U果源，把新鲜水果从果园直接送到您的手中。
-这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果，来这里就对了。
-年会的苹果，就来自U果源...对，就是这样的，大，脆，甜。
-# '}
-        pp '依靠2016年会红包群发功能'
+这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果，买水果来这里就对了。'}
+        pp 'J.C.2016年会红包群发功能'
 
         openid = options[:FromUserName]
-        if Date.parse('2016-01-08') > Date.today
+        if Date.parse('2016-01-14') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外年会红包领取未开始'
+                                                                        Content: 'J.C.户外年会红包领取未开始'
 
         end
 
-        if Date.parse('2016-01-09') < Date.today
+        if Date.parse('2016-01-17') < Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外年会红包领取已结束'
+                                                                        Content: 'J.C.户外年会红包领取已结束'
         end
 
 
         # 依据群里的人数，红包发送245个。
-        left_hb = EricWeixin::WeixinUser.where(phone: '13888889999').count
-        if left_hb > 245
+        left_hb = EricWeixin::WeixinUser.where(phone: '13888889990').count
+        if left_hb > 200
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外年会红包已发完'
+                                                                        Content: 'J.C.户外年会红包已发完'
         end
         # 一个人只能领一个
         current_user = EricWeixin::WeixinUser.where(openid: openid).first
-        if current_user.phone == '13888889999'
+        if current_user.phone == '13888889990'
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共245个"
+                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共200个"
         end
 
         SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共245个"
+                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共200个"
     end
 
     true
@@ -130,26 +128,26 @@ class ::Weixin::Process
       when 'yifengxin_hongbao'
         SelledProductRedpack.delay.send_main_redpack options
       when /yikao_nianhui_2016/
-        pp '依靠2016年会红包群发功能'
+        pp 'J.C.2016年会红包群发功能'
 
         openid = options[:FromUserName]
         if Date.parse('2016-01-08') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外红包领取未开始'
+                                                                        Content: 'J.C.户外红包领取未开始'
 
         end
 
         if Date.parse('2016-01-09') < Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: '依靠户外红包领取已结束'
+                                                                        Content: 'J.C.户外红包领取已结束'
         end
 
 
         # 依据群里的人数，红包发送241个。
 
-        left_hb = EricWeixin::WeixinUser.where(phone: '13888889999').count
+        left_hb = EricWeixin::WeixinUser.where(phone: '13888889990').count
         if left_hb > 245
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
@@ -157,7 +155,7 @@ class ::Weixin::Process
         end
         # 一个人只能领一个
         current_user = EricWeixin::WeixinUser.where(openid: openid).first
-        if current_user.phone == '13888889999'
+        if current_user.phone == '13888889990'
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共245个"
