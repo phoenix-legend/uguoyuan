@@ -151,7 +151,7 @@ class ::Weixin::Process
         # 依据群里的人数，红包发送241个。
 
         left_hb = EricWeixin::WeixinUser.where(phone: '13888889990').count
-        if left_hb > 245
+        if left_hb > 200
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: '红包已发完'
@@ -161,13 +161,13 @@ class ::Weixin::Process
         if current_user.phone == '13888889990'
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
-                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共245个"
+                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共200个"
         end
 
         SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共245个"
+                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共200个"
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
