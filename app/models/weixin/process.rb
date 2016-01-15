@@ -131,14 +131,14 @@ class ::Weixin::Process
         pp 'J.C.2016年会红包群发功能'
 
         openid = options[:FromUserName]
-        if Date.parse('2016-01-08') > Date.today
+        if Date.parse('2016-01-14') > Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: 'J.C.户外红包领取未开始'
 
         end
 
-        if Date.parse('2016-01-09') < Date.today
+        if Date.parse('2016-01-17') < Date.today
           return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                         FromUserName: options[:ToUserName],
                                                                         Content: 'J.C.户外红包领取已结束'

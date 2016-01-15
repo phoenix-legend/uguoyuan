@@ -18,7 +18,7 @@ class SelledProductRedpack < ActiveRecord::Base
       red_pack_options[:total_amount] = (rand 10) + 100   #金额随机
 
       # 红包将只会在1月8日和1月9日两天生效
-      return 'J.C.户外红包领取已结束' if Date.parse('2016-01-09') < Date.today
+      return 'J.C.户外红包领取已结束' if Date.parse('2016-01-17') < Date.today
 
       # 依据群里的人数，红包发送241个。
       return '红包已发完' if EricWeixin::WeixinUser.where(phone: '13888889990').count > 245
