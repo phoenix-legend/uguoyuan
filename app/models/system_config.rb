@@ -9,12 +9,11 @@ class SystemConfig < ActiveRecord::Base
   end
 
   def self.v k, default=''
-    v = SystemConfig.find_or_create_by!(k: "订单付款后文案-非首单").v
-    if v.blank?
-      return default
-    else
-      v
+    sc = SystemConfig.where(k: k).first
+    if sc.blank?
+      sc = SystemConfig.find_or_create_by!(k: k, v: default)
     end
+    return sc.v
   end
 
 end

@@ -207,6 +207,8 @@ options 样例
     SelledProduct.delay.create_products_by_order_id options[:OrderId]
     # 发首单红包
     SelledProductRedpack.delay.send_first_order_redpack options
+
+    ::Weixin::Process.delay(:priority => 10).order_tongzhi(options[:OrderId], options)
     return true
   end
 
@@ -237,5 +239,66 @@ options 样例
     true
   end
 
+  def self.order_tongzhi order_id, options
+
+    order = ::EricWeixin::Xiaodian::Order.where("order_id = ?", order_id).first
+    1.upto(10) do
+      if order.receiver_name.blank?
+        sleep 1
+        order = order.reload
+      end
+    end
+    ['oliNLwN5ggbRmL4g723QVOZ6CfAg'].each do |openid|
+      EricWeixin::TemplateMessageLog.send_template_message openid: openid,
+                                                           template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
+                                                           topcolor: '#00FF00',
+                                                           public_account_id: 1,
+                                                           data: {
+                                                               first: {value: "#{order.product_name}有新的订单，#{order.product_count}个"},
+                                                               keyword1: {value: order.id},
+                                                               keyword2: {value: order.receiver_name},
+                                                               keyword3: {value: "#{order.order_total_price.to_f/100}元"},
+                                                               keyword4: {value: "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}"},
+                                                               keyword5: {value: order.created_at.chinese_format},
+                                                               remark: {value: '有新的订单，请及时处理'}
+                                                           }
+    end
+
+  end
+
+  # 给指定的人发指定金额的红包
+  # ::Weixin::Process.now_send_redpack 'o2rYwuANGm7jQs1pNqxvyPy80vjU', '1'
+  def self.now_send_redpack openid, mount
+    # 一个人只能领一个
+    red_pack_options = {}
+    red_pack_options[:wishing] = SystemConfig.v('红包活动~祝福语', '祝大家新年平安、幸福')
+    red_pack_options[:client_ip] = '101.231.116.38'
+    red_pack_options[:act_name] = SystemConfig.v('红包活动~活动名称', '没货了')
+    red_pack_options[:remark] = SystemConfig.v('红包活动~备注说明', '祝大家快乐')
+    red_pack_options[:send_name] = SystemConfig.v('红包活动~发送者名称', '小神龙创意俱乐部')
+    red_pack_options[:re_openid] = openid
+    red_pack_options[:total_amount] = mount #金额随机
+
+
+    red_pack_options = {}
+    red_pack_options[:wishing] = '小红包，意思一下，抱歉'
+    red_pack_options[:client_ip] = '101.231.116.38'
+    red_pack_options[:act_name] = '退款'
+    red_pack_options[:remark] = '小红包，意思一下，抱歉'
+    red_pack_options[:send_name] = 'U果源'
+    red_pack_options[:re_openid] = 'oliNLwPfEnG_YHaxNlskPKcDM_oU'
+    red_pack_options[:total_amount] = 500 #金额随机
+
+    redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
+
+
+    if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
+      pp '成功'
+    else #发送失败，先记录名称，后续补发
+      pp "给 #{openid} 发红包失败，失败原因是："
+      pp redpack_order
+      redpack_order.to_logger
+    end
+  end
 
 end
