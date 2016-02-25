@@ -39,7 +39,7 @@ gem "multi_xml"
 gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
 gem "will_paginate-foundation"
-gem 'eric_weixin', '~> 0.3.2'
+gem 'eric_weixin', '~> 0.4.0'
 gem 'eric_tools', '~> 0.0.6'
 gem 'tinymce-rails'
 gem 'jquery-ui-rails'
