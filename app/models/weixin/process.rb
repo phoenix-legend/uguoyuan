@@ -262,6 +262,11 @@ options 样例
                                                                keyword5: {value: order.created_at.chinese_format},
                                                                remark: {value: '有新的订单，请及时处理'}
                                                            }
+      EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
+                                                             openid: openid,
+                                                             message_type: 'text',
+                                                             data: {:content => "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}   #{order.receiver_name}  #{order.receiver_phone}  #{order.product_name}   数量：#{order.product_count}"},
+                                                             message_id: options[:MsgId]
     end
 
   end
