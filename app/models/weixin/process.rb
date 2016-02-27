@@ -248,7 +248,7 @@ options 样例
         order = order.reload
       end
     end
-    ['oliNLwN5ggbRmL4g723QVOZ6CfAg'].each do |openid|
+    ['oliNLwN5ggbRmL4g723QVOZ6CfAg', 'oliNLwNPhrHbtUX9cc22N13HKdtQ'].each do |openid|
       EricWeixin::TemplateMessageLog.send_template_message openid: openid,
                                                            template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
                                                            topcolor: '#00FF00',
@@ -256,7 +256,7 @@ options 样例
                                                            data: {
                                                                first: {value: "#{order.product_name}有新的订单，#{order.product_count}个"},
                                                                keyword1: {value: order.id},
-                                                               keyword2: {value: order.receiver_name},
+                                                               keyword2: {value: "#{order.receiver_name}/#{order.receiver_phone}"},
                                                                keyword3: {value: "#{order.order_total_price.to_f/100}元"},
                                                                keyword4: {value: "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}"},
                                                                keyword5: {value: order.created_at.chinese_format},
