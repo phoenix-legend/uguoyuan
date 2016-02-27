@@ -11,10 +11,6 @@ a = {
                  "name" => "运城红富士/12个装/小琦家的",
                  "type" => "view",
                  "url" => 'http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwNbltMdxy_6im5pmeDNWrYs&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect'
-             }, {
-                 "name" => "洛川红富士/20个/振峰家的",
-                 "type" => "view",
-                 "url" => 'http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwLz_PkaSwx2X3napkHYbbyk&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect'
              }
          ]
         },
@@ -42,10 +38,6 @@ a = {
                  "name" => "红枣/卫生，不扒开夹核桃了",
                  "type" => "view",
                  "url" => 'http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwG5ekElQ5m-lq27la09s_dk&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect'
-             }, {
-                 "name" => "核桃/两个一起捏就破，皮薄",
-                 "type" => "view",
-                 "url" => 'http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwPPR4fdtIcleoapyYV58wsA&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect'
              }
          ]
         }
