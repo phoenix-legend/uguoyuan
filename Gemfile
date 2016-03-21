@@ -1,5 +1,5 @@
-# source 'https://rubygems.org'
-source 'https://ruby.taobao.org'
+source 'https://rubygems.org'
+# source 'https://ruby.taobao.org'
 
 ruby '2.0.0'
 #ruby-gemset=uguoyuan
@@ -39,8 +39,8 @@ gem "multi_xml"
 gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
 gem "will_paginate-foundation"
-gem 'eric_weixin', '~> 0.4.0'
-gem 'eric_tools', '~> 0.0.6'
+gem 'eric_weixin', '~> 0.4.1'
+gem 'eric_tools', '~> 0.0.7'
 gem 'tinymce-rails'
 gem 'jquery-ui-rails'
 gem 'simple_form'
