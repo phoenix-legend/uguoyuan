@@ -51,3 +51,10 @@ gem 'simple_form'
 # gem 'delayed_job'
 gem 'daemons'  # delayed_job 使用的延时进程
 gem 'delayed_job_active_record'
+
+
+
+gem 'barby'
+gem 'chunky_png'
+gem 'rqrcode'
+
