@@ -102,7 +102,7 @@ class ::Weixin::Process
       when /yilabao/
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: '你好，欢迎品尝来自U果源的苹果。
+                                                                      Content: '你好，欢迎品尝来自U果源的好吃的苹果🍏。
 
 您手上的苹果是U果源直接从果农手中寄出，新鲜健康、无污染，不打腊。
 
