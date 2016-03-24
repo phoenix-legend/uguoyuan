@@ -28,5 +28,24 @@ module Weixin::WeixinAutoReplyFunctions
                                                            public_account_id: public_account.id
     return ''
   end
+
+  # {:key_word=>"订单",
+  # :receive_message=>
+  #      {:ToUserName=>"gh_66b815c2c7c1",
+  #       :FromUserName=>"oE46BjsgNP4NbxQ2qSKT2R-tgDV4",
+  #       :CreateTime=>"1458637054",
+  #       :MsgType=>"text",
+  #       :Content=>"订单",
+  #       :MsgId=>"6264798444067460276"}}
+  def self.self_related_users_and_orders options
+    pp "xxxx"*100
+    pp options
+
+    pa = ::EricWeixin::PublicAccount.get_public_account_by_name 'ugy'
+    url = ::EricWeixin::Snsapi.get_snsapi_base_url url:'/wx/sale/market/salesman_performance/', app_id: pa.weixin_app_id, schema_host: pa.host_name_with_schema
+    return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:receive_message][:FromUserName],
+                                                                FromUserName: options[:receive_message][:ToUserName],
+                                                                Content: url
+  end
 end
 

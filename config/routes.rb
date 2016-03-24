@@ -1,5 +1,25 @@
 Rails.application.routes.draw do
+
+  namespace :wx do
+    namespace :sale do
+      resources :market, only: [] do
+        collection do
+          get :salesman_performance
+        end
+      end
+    end
+  end
+
   namespace :cms do
+
+    namespace :sale do
+      resources :market, only: [] do
+        collection do
+          get :salesman_performance
+        end
+      end
+    end
+
     namespace :personal do
       resources :organizations do
         member do

@@ -1,0 +1,44 @@
+<h3 class="text-center">我的战绩</h3>
+
+<table class="table">
+  <thead>
+  <th>用户</th><th>名称</th><th>交易额/元</th><th>佣金/元</th>
+  </thead>
+</table>
+<%# sum_sale_payment = 0 %>
+<% @select_salesman_customers.each do |customer| %>
+    <%
+       orders = customer.xiaodian_apple_orders
+       next if orders.count < 1
+    %>
+    <table class="table">
+      <% orders.each do |order| %>
+          <tr>
+            <td><%= customer.nickname %></td>
+            <td><%= order.product_name %></td>
+            <td><%= order.order_total_price/100.0 rescue 'error' %></td>
+            <%#
+               sale_payment = order.sale_payment
+               sale_payment = sale_payment > 0 ? sale_payment/100 : 0
+            %>
+            <!--<td><%#= Weixin::Xiaodian::Order::CLOSING_STATUS[order.closing_status] %></td>-->
+            <td><%= order.sale_payment.to_f/100.0 rescue 'error' %></td>
+          </tr>
+          <%#
+             if order.closing_status == 0
+               sum_sale_payment += sale_payment
+             end
+          %>
+      <% end %>
+    </table>
+<% end unless @select_salesman_customers.blank? %>
+
+<% wx_users = @select_salesman_customers.where(subscribe: 1) %>
+<h5>我带来的粉丝↓↓↓↓</h5>
+<% wx_users.each do |u| %>
+    <label class="button tiny"><%= u.nickname %></label>
+<% end %>
+
+<!--<div style="position: fixed; bottom: 0;left:50%; background-color: red" >-->
+  <!--<h3 class="text-center"><%#= "总计未结算提成:#{sum_sale_payment}" %></h3>-->
+<!--</div>-->

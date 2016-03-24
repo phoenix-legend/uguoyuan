@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
-# source 'https://ruby.taobao.org'
+source 'https://gems.ruby-china.org'
+# source 'https://rubygems.org'
 
 ruby '2.0.0'
 #ruby-gemset=uguoyuan

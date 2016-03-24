@@ -1,0 +1,53 @@
+<h3>后台查看所有销售业绩</h3>
+
+<%= form_tag '/cms/sale/market/salesman_performance', method: :get, id: 'form_' do %>
+<%=
+    select_tag 'self_channel',
+               options_from_collection_for_select(@salesman, 'self_channel', 'nickname', @select_salesman.self_channel),
+               onchange: 'change_salesman()'
+%>
+<%= submit_tag '提交', id: 'submit', style: 'visibility:hidden' %>
+<% end %>
+<script>
+  function change_salesman(){
+      $("#submit").click();
+  }
+</script>
+<table class="table">
+<thead>
+<th>优果</th><th>价格</th><th>数量</th><th>总计</th><th>提成</th><th>结算状态</th>
+</thead>
+</table>
+<br/>
+<% sum_sale_payment = 0 %>
+<br/>
+<% @select_salesman_customers.each do |customer| %>
+<%= customer.nickname %>
+<%
+    orders = customer.xiaodian_apple_orders
+%>
+    <table class="table">
+<% orders.each do |order| %>
+          <tr>
+          <td><%= order.product_name %></td>
+            <td><%= "#{order.product_price/100.0 rescue 'error'}元" %></td>
+          <td><%= order.product_count %></td>
+          <td><%= "#{order.order_total_price/100.0 rescue 'error' }元" %></td>
+          <%
+             sale_payment = order.sale_payment
+          %>
+          <td><%= order.sale_payment %></td>
+          <td><%= Weixin::Xiaodian::Order::CLOSING_STATUS[order.closing_status] %></td>
+          </tr>
+          <%
+             if order.closing_status == 0
+                sum_sale_payment += sale_payment
+             end
+          %>
+<% end %>
+    </table>
+<% end unless @select_salesman_customers.blank? %>
+
+<div style="position: fixed; bottom: 0;left:50%; background-color: red" >
+  <h3 class="text-center"><%= "总计未结算提成:#{sum_sale_payment}" %></h3>
+</div>

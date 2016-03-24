@@ -1,5 +1,8 @@
 class Weixin::WeixinUser < EricWeixin::WeixinUser
 
+  def xiaodian_apple_orders
+    Weixin::Xiaodian::Order.where(openid: openid)#.where "product_name like ?", "%#{SystemConfig.v( 'ticheng_product_name_key', '红富士' )}%"
+  end
 end
 
 
