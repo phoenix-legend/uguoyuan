@@ -17,8 +17,10 @@ class ::Weixin::Process
     # 处理朋友推荐，一般会用openid做为二维码参数，所以长度一般会在25位以上，先使用位数过滤一遍，可减少数据库查询负载。
     if event_key.length > 25
       weixin_user = EricWeixin::WeixinUser.where(openid: event_key).first
-      SelledProductRedpack.delay.send_bak_redpack options, weixin_user.openid unless weixin_user.blank?
-      return true
+      if weixin_user # 如果用户不存在，再进行查询
+        SelledProductRedpack.delay.send_bak_redpack options, weixin_user.openid unless weixin_user.blank?
+        return true
+      end
     end
 
     # 处理用户扫一封信二维码进来的情况...   如果您觉得好吃，记得常来~更多开箱红包等你来抢！ U果源一直在您身边，有需求随时微我哟。
@@ -28,51 +30,18 @@ class ::Weixin::Process
                                                                      openid: options[:FromUserName],
                                                                      message_type: 'text',
                                                                      data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
-      when /yikao_nianhui_2016/
-        EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
-                                                                     openid: options[:FromUserName],
-                                                                     message_type: 'text',
-                                                                     data: {:content => 'U果源，把新鲜水果从果园直接送到您的手中。
-
-这里没有批发商，没有工业腊，没有催熟剂，没有门面费用，只有最原始新鲜的水果.
-
-买水果来这里就对了。'}
-        pp 'J.C.2016年会红包群发功能'
-
-        openid = options[:FromUserName]
-        if Date.parse('2016-01-14') > Date.today
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: 'J.C.户外年会红包领取未开始'
-
-        end
-
-        if Date.parse('2016-01-17') < Date.today
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: 'J.C.户外年会红包领取已结束'
-        end
-
-
-        # 依据群里的人数，红包发送245个。
-        left_hb = EricWeixin::WeixinUser.where(phone: '13888889990').count
-        if left_hb > 200
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: 'J.C.户外年会红包已发完'
-        end
-        # 一个人只能领一个
-        current_user = EricWeixin::WeixinUser.where(openid: openid).first
-        if current_user.phone == '13888889990'
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共200个"
-        end
-
-        SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
+      when /yilabao/
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共200个"
+                                                                      Content: '你好，欢迎品尝来自U果源的好吃的苹果🍏。
+
+您手上的苹果是U果源直接从果农手中寄出，新鲜健康、无污染，不打腊。
+
+如果觉得味道不错，可直接从下方菜单中购买，感谢您的支持！'
+      when /yikao_nianhui_2016/
+          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                        FromUserName: options[:ToUserName],
+                                                                        Content: '户外年会红包领取已结束'
     end
 
     true
@@ -130,44 +99,19 @@ class ::Weixin::Process
     case content
       when 'yifengxin_hongbao'
         SelledProductRedpack.delay.send_main_redpack options
-      when /yikao_nianhui_2016/
-        pp 'J.C.2016年会红包群发功能'
-
-        openid = options[:FromUserName]
-        if Date.parse('2016-01-14') > Date.today
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: 'J.C.户外红包领取未开始'
-
-        end
-
-        if Date.parse('2016-01-17') < Date.today
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: 'J.C.户外红包领取已结束'
-        end
-
-
-        # 依据群里的人数，红包发送241个。
-
-        left_hb = EricWeixin::WeixinUser.where(phone: '13888889990').count
-        if left_hb > 200
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: '红包已发完'
-        end
-        # 一个人只能领一个
-        current_user = EricWeixin::WeixinUser.where(openid: openid).first
-        if current_user.phone == '13888889990'
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: "请手下留情，给后面兄弟一些机会, 红包已发送#{left_hb}个，总共200个"
-        end
-
-        SelledProductRedpack.delay.send_yikao_redpack openid # 发红包
+      when /yilabao/
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
-                                                                      Content: "红包正在排队发送，请稍安勿燥, 红包已发送#{left_hb}个，总共200个"
+                                                                      Content: '你好，欢迎品尝来自U果源的好吃的苹果🍏。
+
+您手上的苹果是U果源直接从果农手中寄出，新鲜健康、无污染，不打腊。
+
+如果觉得味道不错，可直接从下方菜单中购买，感谢您的支持！'
+      when /yikao_nianhui_2016/
+        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                      FromUserName: options[:ToUserName],
+                                                                      Content: '户外红包领取已结束'
+
     end
     # EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
     #                                                        openid: options[:FromUserName],
@@ -187,6 +131,7 @@ class ::Weixin::Process
 
     ''
   end
+
 
 =begin
 options 样例
