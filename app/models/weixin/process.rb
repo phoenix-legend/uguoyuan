@@ -155,7 +155,7 @@ options 样例
 
     ::Weixin::Process.delay(:priority => 10).order_tongzhi(options[:OrderId], options)
 
-    Weixin::Xiaodian::Order.delay(:priority => 11).fa_ti_cheng(options[:OrderId], options[:FromUserName])
+    # Weixin::Xiaodian::Order.delay(:priority => 11).fa_ti_cheng(options[:OrderId], options[:FromUserName])
     return true
   end
 

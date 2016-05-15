@@ -1,3 +1,5 @@
+# 整个类都是小朋为了发提成而创建的， 临时先不用。
+
 class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
 
   CLOSING_STATUS = {
@@ -32,6 +34,7 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
   # 满足以下条件才发红包
   # 此订单是＊红富士＊
   # 提成大于0
+  # 待检查
   def self.fa_ti_cheng order_id, to_openid
     order = find_by_order_id(order_id)
     return 0 if order.blank?
