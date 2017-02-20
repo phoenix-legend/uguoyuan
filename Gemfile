@@ -31,7 +31,7 @@ gem 'mysql2', '0.3.18'
 # Use unicorn as the app server
 gem 'unicorn'
 
-gem 'nokogiri'
+gem 'nokogiri', '1.6.7.2'
 
 gem 'rest-client'
 gem "multi_xml"
