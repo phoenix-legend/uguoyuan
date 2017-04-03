@@ -44,17 +44,40 @@ module Weixin::WeixinAutoReplyFunctions
   # todo 获取到客服口令以后, 以文字形式返回给客服即可。
   # 还需要配置关键字: abc    如果返回的消息包含"unknow-openid", 则不发送任何消息
   # 消息异步发送。
+
   def self.get_kf_kouling_insurance_tgy options
     pp options
-    # content = options[:receive_message][:Content]
-    # openid = options[:receive_message][:FromUserName]
-    #
-    # EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: options[:ToUserName],
-    #                                                              openid: options[:FromUserName],
-    #                                                              message_type: 'text',
-    #                                                              data: {:content => "你好，你分享的文章#{options[:Title]}已收到,非常感谢您的分享。"},
-    #                                                              message_id: options[:MsgId]
+    {:ToUserName => "gh_5734a2ca28e5", :FromUserName => "oliNLwN5ggbRmL4g723QVOZ6CfAg",
+     :CreateTime => "1491190248", :MsgType => "text", :Content => "kfkouling", :MsgId => "6404613347679903130"}
 
+    Weixin::WeixinAutoReplyFunctions.delay.get_kf_kouling_insurance_tgy_action options
+
+  end
+
+  def self.get_kf_kouling_insurance_tgy_action options
+    content = options[:receive_message][:Content]
+    openid = options[:receive_message][:FromUserName]
+
+    weixin_user = EricWeixin::WeixinUser.where(openid: openid).first
+    nickname = weixin_user.nickname
+
+    city = content.split(',')[1]
+    response = RestCleint.get 'http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu', {"openid" => openid,
+                                                                                         "nickname" => nickname,
+                                                                                         "city" => city}
+    response = response.body
+    response = JSON.parse(response)
+    kouling = if response["data"]["kouling"].blank?
+                ''
+              else
+                response["data"]["kouling"]
+              end
+
+    EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                                 openid: openid,
+                                                                 message_type: 'text',
+                                                                 data: {:content => kouling},
+                                                                 message_id: options[:MsgId]
   end
 
 
