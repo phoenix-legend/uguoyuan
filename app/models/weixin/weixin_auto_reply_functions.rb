@@ -46,9 +46,9 @@ module Weixin::WeixinAutoReplyFunctions
   # 消息异步发送。
 
   def self.get_kf_kouling_insurance_tgy options
-    pp options
-    {:ToUserName => "gh_5734a2ca28e5", :FromUserName => "oliNLwN5ggbRmL4g723QVOZ6CfAg",
-     :CreateTime => "1491190248", :MsgType => "text", :Content => "kfkouling", :MsgId => "6404613347679903130"}
+    # pp options
+    # {:ToUserName => "gh_5734a2ca28e5", :FromUserName => "oliNLwN5ggbRmL4g723QVOZ6CfAg",
+    #  :CreateTime => "1491190248", :MsgType => "text", :Content => "kfkouling", :MsgId => "6404613347679903130"}
 
     Weixin::WeixinAutoReplyFunctions.delay.get_kf_kouling_insurance_tgy_action options
 
@@ -65,6 +65,7 @@ module Weixin::WeixinAutoReplyFunctions
     response = RestCleint.get 'http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu', {"openid" => openid,
                                                                                          "nickname" => nickname,
                                                                                          "city" => city}
+    pp response
     response = response.body
     response = JSON.parse(response)
     kouling = if response["data"]["kouling"].blank?
