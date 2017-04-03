@@ -62,7 +62,7 @@ module Weixin::WeixinAutoReplyFunctions
     weixin_user = EricWeixin::WeixinUser.where(openid: openid).first
     nickname = weixin_user.nickname
 
-    city = content.split(',|，')[1]
+    city = content.split(/,|，/)[1]
     response = RestClient.get 'http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu', {"openid" => openid,
                                                                                          "nickname" => nickname,
                                                                                          "city" => city}
