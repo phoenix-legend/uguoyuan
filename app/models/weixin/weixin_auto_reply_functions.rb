@@ -63,8 +63,8 @@ module Weixin::WeixinAutoReplyFunctions
     nickname = weixin_user.nickname
 
     city = content.split(/,|，/)[1]
-    url = CGI::escape "http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu?openid=#{openid}&nickname=#{nickname}&city=#{city}"
-    response = RestClient.get  url
+    url = "http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu?openid=#{openid}&nickname=#{CGI::escape  nickname}&city=#{CGI::escape  city}"
+    response = RestClient.get url
     pp response
     response = response.body
     response = JSON.parse(response)
