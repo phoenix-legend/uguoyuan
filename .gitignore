@@ -20,6 +20,7 @@ nohup.out
 /log/*.log
 /log/*.log.*
 /tmp/*
+/tmp
 .sass-cache/
 public/assets/
 # Ignore all idea
