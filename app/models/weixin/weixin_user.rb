@@ -1,9 +1,32 @@
 class Weixin::WeixinUser < EricWeixin::WeixinUser
 
   def xiaodian_apple_orders
-    Weixin::Xiaodian::Order.where(openid: openid)#.where "product_name like ?", "%#{SystemConfig.v( 'ticheng_product_name_key', '红富士' )}%"
+    Weixin::Xiaodian::Order.where(openid: openid) #.where "product_name like ?", "%#{SystemConfig.v( 'ticheng_product_name_key', '红富士' )}%"
   end
 end
+
+
+aa = '{"button":[{"name":"苹果大脆甜", "sub_button":[{"name":"运城红富士/12个装/小琦家的", "type":"view", "url":"http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwNbltMdxy_6im5pmeDNWrYs&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect"}, {"name":"红枣~好吃到没朋友", "type":"view", "url":"http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwG5ekElQ5m-lq27la09s_dk&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect"}, {"name":"贡梨~甜", "type":"view", "url":"http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwGUt0gikabCWvYfwAxBQB-c&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect"}]}, {"name":"订单看过来", "sub_button":[{"name":"订单点这里", "type":"view", "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DL2VyaWNfd2VpeGluL3dlaXhpbi9vcmRlcnM%2FYT0x&response_type=code&scope=snsapi_base&state=abc#wechat_redirect"}, {"name":"科普一下", "type":"view", "url":"http://mp.weixin.qq.com/mp/homepage?__biz=MzIyNjE0OTc4Mg==&hid=1&sn=8a3a0ff3ea5b2548b0215d98e1c31bfd#wechat_redirect"}]}, {"name":"朋友们的店", "sub_button":[{"name":"川藏精品/吃货天堂", "type":"view", "url":"https://h5.koudaitong.com/v2/showcase/homepage?kdt_id=17326391&reft=1476706490077&spm=g301348950&kdtfrom=wxd&form=singlemessage"}]}]}'
+k = JSON.parse aa
+
+k = {
+    "button" => [
+        {"name" => "苹果大脆甜", "sub_button" => [
+            {"name" => "运城红富士/12个装/小琦家的", "type" => "view", "url" => ""},
+            {"name" => "红枣~好吃到没朋友", "type" => "view", "url" => "http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwG5ekElQ5m-lq27la09s_dk&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect"},
+            {"name" => "纯蜂蜜,未加工", "type" => "view", "url" => "http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pliNLwErxa5LjeS6exZJUTBM5Pd8&biz=MzIyNjE0OTc4Mg==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect"}]
+        },
+
+        {"name" => "订单看过来", "sub_button" => [
+            {"name" => "订单点这里", "type" => "view", "url" => "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DL2VyaWNfd2VpeGluL3dlaXhpbi9vcmRlcnM%2FYT0x&response_type=code&scope=snsapi_base&state=abc#wechat_redirect"},
+            {"name" => "科普一下", "type" => "view", "url" => "http://mp.weixin.qq.com/mp/homepage?__biz=MzIyNjE0OTc4Mg==&hid=1&sn=8a3a0ff3ea5b2548b0215d98e1c31bfd#wechat_redirect"}]
+        },
+
+        {"name" => "朋友们的店", "sub_button" => [
+            {"name" => "川藏精品/吃货天堂", "type" => "view", "url" => "https://h5.koudaitong.com/v2/showcase/homepage?kdt_id=17326391&reft=1476706490077&spm=g301348950&kdtfrom=wxd&form=singlemessage"}]
+        }
+    ]
+}
 
 
 a = {

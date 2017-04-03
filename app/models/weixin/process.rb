@@ -245,11 +245,30 @@ options 样例
 
 
     if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
-      pp '成功'
+      pp "给 #{openid} 发红包成功"
     else #发送失败，先记录名称，后续补发
       pp "给 #{openid} 发红包失败，失败原因是："
       pp redpack_order
       redpack_order.to_logger
+    end
+  end
+
+  # 做api, 用于推送信息 todo
+  def self.push_message_to_user openids, message
+    openids.split(',').each do |openid|
+      EricWeixin::TemplateMessageLog.send_template_message openid: openid,
+                                                           template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
+                                                           topcolor: '#00FF00',
+                                                           public_account_id: 1,
+                                                           data: {
+                                                               first: {value: "提醒"},
+                                                               keyword1: {value: 888},
+                                                               keyword2: {value: "忽略"},
+                                                               keyword3: {value: "忽略"},
+                                                               keyword4: {value: "忽略"},
+                                                               keyword5: {value: order.created_at.chinese_format},
+                                                               remark: {value: message}
+                                                           }
     end
   end
 

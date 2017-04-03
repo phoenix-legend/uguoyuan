@@ -35,10 +35,28 @@ module Weixin::WeixinAutoReplyFunctions
     pp options
 
     pa = ::EricWeixin::PublicAccount.get_public_account_by_name 'ugy'
-    url = ::EricWeixin::Snsapi.get_snsapi_base_url url:'/wx/sale/market/salesman_performance/', app_id: pa.weixin_app_id, schema_host: pa.host_name_with_schema
+    url = ::EricWeixin::Snsapi.get_snsapi_base_url url: '/wx/sale/market/salesman_performance/', app_id: pa.weixin_app_id, schema_host: pa.host_name_with_schema
     return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:receive_message][:FromUserName],
-                                                                FromUserName: options[:receive_message][:ToUserName],
-                                                                Content: url
+                                                                  FromUserName: options[:receive_message][:ToUserName],
+                                                                  Content: url
   end
+
+  # todo 获取到客服口令以后, 以文字形式返回给客服即可。
+  # 还需要配置关键字: abc    如果返回的消息包含"unknow-openid", 则不发送任何消息
+  # 消息异步发送。
+  def self.get_kf_kouling_insurance_tgy options
+    pp options
+    # content = options[:receive_message][:Content]
+    # openid = options[:receive_message][:FromUserName]
+    #
+    # EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: options[:ToUserName],
+    #                                                              openid: options[:FromUserName],
+    #                                                              message_type: 'text',
+    #                                                              data: {:content => "你好，你分享的文章#{options[:Title]}已收到,非常感谢您的分享。"},
+    #                                                              message_id: options[:MsgId]
+
+  end
+
+
 end
 
