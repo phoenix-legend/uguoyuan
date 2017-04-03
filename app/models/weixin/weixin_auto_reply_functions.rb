@@ -52,7 +52,7 @@ module Weixin::WeixinAutoReplyFunctions
 
     Weixin::WeixinAutoReplyFunctions.delay.get_kf_kouling_insurance_tgy_action options
 
-    return true
+    return ''
   end
 
   def self.get_kf_kouling_insurance_tgy_action options
