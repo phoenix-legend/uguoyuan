@@ -52,6 +52,7 @@ module Weixin::WeixinAutoReplyFunctions
 
     Weixin::WeixinAutoReplyFunctions.delay.get_kf_kouling_insurance_tgy_action options
 
+    return true
   end
 
   def self.get_kf_kouling_insurance_tgy_action options
@@ -62,7 +63,7 @@ module Weixin::WeixinAutoReplyFunctions
     nickname = weixin_user.nickname
 
     city = content.split(',')[1]
-    response = RestCleint.get 'http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu', {"openid" => openid,
+    response = RestClient.get 'http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu', {"openid" => openid,
                                                                                          "nickname" => nickname,
                                                                                          "city" => city}
     pp response
