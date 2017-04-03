@@ -73,7 +73,7 @@ module Weixin::WeixinAutoReplyFunctions
                 response["data"]["kouling"]
               end
 
-    EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+    EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
                                                                  openid: openid,
                                                                  message_type: 'text',
                                                                  data: {:content => kouling},
