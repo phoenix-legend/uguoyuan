@@ -195,7 +195,8 @@ options 样例
         order = order.reload
       end
     end
-    ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid|
+    # ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
+    ['oliNLwN5ggbRmL4g723QVOZ6CfAg'].each do |openid| # 我自己
       EricWeixin::TemplateMessageLog.send_template_message openid: openid,
                                                            template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
                                                            topcolor: '#00FF00',
