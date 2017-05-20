@@ -35,6 +35,7 @@ gem 'nokogiri', '1.6.7.2'
 
 gem 'rest-client'
 gem "multi_xml"
+gem "uuidtools"
 
 gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
