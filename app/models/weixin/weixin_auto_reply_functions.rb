@@ -41,10 +41,9 @@ module Weixin::WeixinAutoReplyFunctions
                                                                   Content: url
   end
 
-  # todo 获取到客服口令以后, 以文字形式返回给客服即可。
+
   # 还需要配置关键字: abc    如果返回的消息包含"unknow-openid", 则不发送任何消息
   # 消息异步发送。
-
   def self.get_kf_kouling_insurance_tgy options
     # pp options
     # {:ToUserName => "gh_5734a2ca28e5", :FromUserName => "oliNLwN5ggbRmL4g723QVOZ6CfAg",
@@ -55,6 +54,8 @@ module Weixin::WeixinAutoReplyFunctions
     return ''
   end
 
+
+  #与爬虫网站相结合, 通过输入城市口令,来获取58拿不到手机号的卖车线索。
   def self.get_kf_kouling_insurance_tgy_action options
     content = options[:receive_message][:Content]
     openid = options[:receive_message][:FromUserName]
@@ -80,6 +81,26 @@ module Weixin::WeixinAutoReplyFunctions
                                                                  data: {:content => kouling},
                                                                  message_id: options[:MsgId]
   end
+
+
+  def self.be_agency options
+    Weixin::WeixinAutoReplyFunctions.delay.be_agency_act options
+    return '代理资料正在准备发送, 2分钟内没收到请联系:13472446647, 微信同步。'
+  end
+
+  # todo 发送我要当代理
+  # 发送8张图片
+  # 发送二维码的链接
+  # 给用户表添加列:  代理标记,成为代理时间,上家的openid
+  # 订单表增加: 超时确认收货时间(考虑到预售), 是否已签收, 签收时间, 增加签收回调
+  # 创建新表: 佣金表: id, order_id,  预计佣金发放时间, 发放是否成功, 实际发放时间, 超时发放时间,   发放金额
+  # 定时任务: 发放佣金, 预售超时时间增加60天, 待手工设置。 普通超时时间14天。
+  # 保留首单红包, 暂停扫码红包和推荐红包
+
+  def self.be_agency_act options
+
+  end
+
 
 
 end

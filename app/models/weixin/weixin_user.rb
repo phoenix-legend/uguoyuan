@@ -3,6 +3,8 @@ class Weixin::WeixinUser < EricWeixin::WeixinUser
   def xiaodian_apple_orders
     Weixin::Xiaodian::Order.where(openid: openid) #.where "product_name like ?", "%#{SystemConfig.v( 'ticheng_product_name_key', '红富士' )}%"
   end
+
+
 end
 
 # 苹果的链接: http://mp.weixin.qq.com/s?__biz=MzIyNjE0OTc4Mg==&mid=2651564265&idx=2&sn=f70f6512f056a02ba4c31ba340ca92f5&chksm=f38bdc10c4fc550662cbf94638e808804b950a7a028d4cf14ed56ec2dde622509068f6abe811&scene=0#wechat_redirect

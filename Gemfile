@@ -40,7 +40,8 @@ gem "uuidtools"
 gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
 gem "will_paginate-foundation"
-gem 'eric_weixin', '~> 0.4.1'
+# gem 'eric_weixin', '~> 0.4.1'
+gem 'eric_weixin', :git => 'git://github.com/ericliu1002000/eric_weixin.git'
 gem 'eric_tools', '~> 0.0.7'
 gem 'tinymce-rails'
 gem 'jquery-ui-rails'
