@@ -145,7 +145,7 @@ options 样例
  :ProductId=>"pE46BjpxJ_7k_H_LmIr4uWPQUI2Q",
  :SkuInfo=>"$适应人群:$青年;1075741873:1079742359;1075781223:1079852461"}
 
-这个接口有些变态，如果服务器在5秒之内没有响应，它会再发一次请求过来。所以，必须有缓存介入。
+如果服务器在5秒之内没有响应，它会再发一次请求过来。所以，必须有缓存介入。
 =end
   def self.get_merchant_order options
     # 根据OrderID查找到Order订单信息。然后分配货品信息(selled_products)以及红包分配记录。
@@ -153,9 +153,10 @@ options 样例
     # 发首单红包
     SelledProductRedpack.delay.send_first_order_redpack options
 
-    ::Weixin::Process.delay(:priority => 10).order_tongzhi(options[:OrderId], options)
+    # ::Weixin::Process.delay(:priority => 10).order_tongzhi(options[:OrderId], options)
 
-    # Weixin::Xiaodian::Order.delay(:priority => 11).fa_ti_cheng(options[:OrderId], options[:FromUserName])
+    Weixin::Xiaodian::Order.delay(:priority => 10).order_tongzhi(options[:OrderId], options)
+
     return true
   end
 
@@ -186,38 +187,14 @@ options 样例
     true
   end
 
-  def self.order_tongzhi order_id, options
-
-    order = ::EricWeixin::Xiaodian::Order.where("order_id = ?", order_id).first
-    1.upto(10) do
-      if order.receiver_name.blank?
-        sleep 1
-        order = order.reload
-      end
-    end
-    # ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
-    ['oliNLwN5ggbRmL4g723QVOZ6CfAg'].each do |openid| # 我自己
-      EricWeixin::TemplateMessageLog.send_template_message openid: openid,
-                                                           template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
-                                                           topcolor: '#00FF00',
-                                                           public_account_id: 1,
-                                                           data: {
-                                                               first: {value: "#{order.product_name}有新的订单，#{order.product_count}个"},
-                                                               keyword1: {value: order.id},
-                                                               keyword2: {value: "#{order.receiver_name}/#{order.receiver_phone}"},
-                                                               keyword3: {value: "#{order.order_total_price.to_f/100}元"},
-                                                               keyword4: {value: "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}"},
-                                                               keyword5: {value: order.created_at.chinese_format},
-                                                               remark: {value: '有新的订单，请及时处理'}
-                                                           }
-      EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
-                                                             openid: openid,
-                                                             message_type: 'text',
-                                                             data: {:content => "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}   #{order.receiver_name}  #{order.receiver_phone}  #{order.product_name}   数量：#{order.product_count}"},
-                                                             message_id: options[:MsgId]
-    end
-
+  # 签收回调
+  # 发反佣等
+  def self.order_sign_in order_id
+    pp '回调成功'
   end
+
+
+  ##**************  以下非回调函数 ********************************************************
 
   # 给指定的人发指定金额的红包
   # ::Weixin::Process.now_send_redpack 'o2rYwuANGm7jQs1pNqxvyPy80vjU', '1'
@@ -272,5 +249,7 @@ options 样例
                                                            }
     end
   end
+
+
 
 end
