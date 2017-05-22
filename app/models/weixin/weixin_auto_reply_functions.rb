@@ -118,6 +118,7 @@ module Weixin::WeixinAutoReplyFunctions
     # todo , 在用户表中贴标签
 
 
+    return ''
   end
 
 
