@@ -16,6 +16,8 @@ class WelcomeController < ApplicationController
   end
 
   #销售代理二维码展示
+  # https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DaHR0cDovL3d3dy51Z3VveXVhbi5jbi93ZWxjb21lL2FnZW50X2V3bT9hPTE%3D&response_type=code&scope=snsapi_base&state=abc#wechat_redirect
+  # 以上是授权链接
   def agent_ewm
     public_account = EricWeixin::PublicAccount.where(name: 'ugy').first
     weixin_user = EricWeixin::WeixinUser.where(openid: params[:openid]).first

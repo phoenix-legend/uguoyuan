@@ -98,6 +98,25 @@ module Weixin::WeixinAutoReplyFunctions
   # 保留首单红包, 暂停扫码红包和推荐红包
 
   def self.be_agency_act options
+    mongo_pics = {"QH-v2WNZTxGMY9gYtYRtf3oOSnj_9tURL7FwdrRKK2c" => '测试图片'}
+    agency_ewm_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DaHR0cDovL3d3dy51Z3VveXVhbi5jbi93ZWxjb21lL2FnZW50X2V3bT9hPTE%3D&response_type=code&scope=snsapi_base&state=abc#wechat_redirect"
+
+    mongo_pics.keys.each do |pic_mediaid|
+      EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                             openid: options[:receive_message][:FromUserName],
+                                                             message_type: 'image',
+                                                             data: {:media_id => pic_mediaid},
+                                                             message_id: options[:MsgId]
+    end
+
+    EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                           openid: options[:receive_message][:FromUserName],
+                                                           message_type: 'text',
+                                                           data: {:content => "<a href='#{agency_ewm_url}'>您的专用二维码请点击这里,第一次点击系统响应略慢,请耐心等待</a>"},
+                                                           message_id: options[:MsgId]
+
+    # todo , 在用户表中贴标签
+
 
   end
 
