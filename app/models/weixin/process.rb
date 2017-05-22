@@ -39,9 +39,18 @@ class ::Weixin::Process
 
 如果觉得味道不错，可直接从下方菜单中购买，感谢您的支持！'
       when /yikao_nianhui_2016/
-          return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                        FromUserName: options[:ToUserName],
-                                                                        Content: '户外年会红包领取已结束'
+        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                      FromUserName: options[:ToUserName],
+                                                                      Content: '户外年会红包领取已结束'
+
+      when /sale-agent-/
+        openid = event_key.gsub('sale-agent-', '')
+        agency = EricWeixin::WeixinUser.where(openid: openid).first
+
+        user = EricWeixin::WeixinUser.where(openid: options[:FromUserName]).first
+
+        user.agency_openid = agency.openid
+        user.save!
     end
 
     true
@@ -249,7 +258,6 @@ options 样例
                                                            }
     end
   end
-
 
 
 end

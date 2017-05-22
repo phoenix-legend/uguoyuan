@@ -85,7 +85,10 @@ module Weixin::WeixinAutoReplyFunctions
 
   def self.be_agency options
     Weixin::WeixinAutoReplyFunctions.delay.be_agency_act options
-    # return '代理资料正在准备发送, 2分钟内没收到请联系:13472446647, 微信同步。'
+    return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                         FromUserName: options[:ToUserName],
+                                                                         Content: '代理资料正在准备发送, 2分钟内没收到请联系:13472446647, 微信同步。'
+    # return ''
     ''
   end
 
@@ -119,7 +122,7 @@ module Weixin::WeixinAutoReplyFunctions
 
 
 
-    # todo , 在用户表中贴标签
+
     # 如果已经是代理,以下逻辑就不用走了
     return if weixin_user.agency_flg == true
 

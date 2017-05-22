@@ -3,6 +3,11 @@
 
 class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
 
+  def owner
+    users = Weixin::WeixinUser.find_by_openid self.openid
+    users.first
+  end
+
   def product_price
     order_total_price/product_count
   end
@@ -55,6 +60,8 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
                                                              data: {:content => "#{order.receiver_province} #{order.receiver_city} #{order.receiver_zone} #{order.receiver_address}   #{order.receiver_name}  #{order.receiver_phone}  #{order.product_name}   数量：#{order.product_count}"},
                                                              message_id: options[:MsgId]
     end
+
+    CommissionCharge.create_commission_charge order.id
 
   end
 
