@@ -44,11 +44,13 @@ class ::Weixin::Process
                                                                       Content: '户外年会红包领取已结束'
 
       when /sale-agent-/
+        pp '////'
         openid = event_key.gsub('sale-agent-', '')
+        pp openid
         agency = EricWeixin::WeixinUser.where(openid: openid).first
-
+        pp agency.openid
         user = EricWeixin::WeixinUser.where(openid: options[:FromUserName]).first
-
+      pp user.openid
         user.agency_openid = agency.openid
         user.save!
     end
