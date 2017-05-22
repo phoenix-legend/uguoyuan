@@ -12,7 +12,8 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
         "oliNLwMqJj8nnhN848FjTctMwgWo" => '壹品农夫（雷俊淞）',
         "oliNLwMWFvoe2dslrfIwMx0ktNWA" => "壹品农夫(琪琪)",
         "oliNLwPCNJDNpqPFpVs7m-PHP0nI" => "旅途记得回家",
-        "oliNLwN5ggbRmL4g723QVOZ6CfAg" => "琦"
+        "oliNLwN5ggbRmL4g723QVOZ6CfAg" => "琦",
+        "oliNLwBnn30D5hP3Elug7MffBQjQ" => "家和万事兴"
     }.keys
   end
 

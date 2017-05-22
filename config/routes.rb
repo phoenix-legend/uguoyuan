@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resources :welcome do
     collection do
       get :share_ewm
+      get :agent_ewm
     end
   end
 
