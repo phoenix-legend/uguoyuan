@@ -15,8 +15,8 @@ class SelledProduct < ActiveRecord::Base
         selled_product.save!
 
         # 再创建红包记录，默认状态是未发送
-        spr_main = SelledProductRedpack.create_selled_product_red_pack selled_product, 'main'
-        spr_back = SelledProductRedpack.create_selled_product_red_pack selled_product, 'back'
+        # spr_main = SelledProductRedpack.create_selled_product_red_pack selled_product, 'main'
+        # spr_back = SelledProductRedpack.create_selled_product_red_pack selled_product, 'back'
         spr_first = SelledProductRedpack.create_selled_product_red_pack selled_product, 'first' if index == 0 && order_count < 2
       }
     end

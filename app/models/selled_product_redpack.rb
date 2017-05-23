@@ -156,7 +156,7 @@ U果源的一路成长离不开您的关注，任何问题请在微信公众账�
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: options[:ToUserName],
                                                              openid: options[:FromUserName],
                                                              message_type: 'text',
-                                                             data: {:content => SystemConfig.find_or_create_by!(k: "订单付款后文案-非首单").v||'您的订单已经收到！这就给您备货...'}
+                                                             data: {:content => SystemConfig.find_or_create_by!(k: "订单付款后文案-非首单").v||'您的订单已经收到！这就给您备货...任何问题请在微信公众账号直接留言，客服将尽快与您沟通。'}
     end
   end
 

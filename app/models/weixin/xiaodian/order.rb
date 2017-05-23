@@ -39,8 +39,14 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
         order = order.reload
       end
     end
+
+    notification_user_openids = if order.product_name.match /芒果/
+                                  Weixin::Xiaodian::Order.get_mongo_order_tongzhi_user.keys
+                                else
+                                  Weixin::Xiaodian::Order.other_order_tongzhi_user.keys
+                                end
     # ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
-    ['oliNLwN5ggbRmL4g723QVOZ6CfAg'].each do |openid| # 我自己
+    notification_user_openids.each do |openid| # 我自己
       EricWeixin::TemplateMessageLog.send_template_message openid: openid,
                                                            template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
                                                            topcolor: '#00FF00',
@@ -71,7 +77,6 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
   #     2 => '不结算',
   #     3 => '发红包异常'
   # }
-
 
 
   # 本订单提成
