@@ -35,20 +35,23 @@ class CommissionCharge < ActiveRecord::Base
     #
   end
 
+
+  # ::CommissionCharge.send_commission_charge 566
   def self.send_commission_charge order_id
 
     cs = CommissionCharge.find_by_weixin_xiaodian_order_id order_id
 
     red_pack_options = {}
     red_pack_options[:wishing] = '恭喜, 一个订单已完成签收'
-    red_pack_options[:client_ip] = '101.231.116.38'
+    red_pack_options[:client_ip] = '123.59.130.146'
     red_pack_options[:act_name] = '感谢'
     red_pack_options[:remark] = '恭喜, 一个订单已完成签收,加油。'
     red_pack_options[:send_name] = 'U果源'
     red_pack_options[:re_openid] = cs.agency_openid
     red_pack_options[:total_amount] = cs.commision_charge_number #金额随机
-
+    pp red_pack_options
     redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
+    pp redpack_order
     cs.payment_time= Time.now
 
     if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功

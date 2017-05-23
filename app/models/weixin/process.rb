@@ -224,13 +224,14 @@ options 样例
     red_pack_options[:total_amount] = mount #金额随机
 
 
+    openid = "oliNLwN5ggbRmL4g723QVOZ6CfAg"
     red_pack_options = {}
     red_pack_options[:wishing] = '小红包，意思一下，抱歉'
     red_pack_options[:client_ip] = '101.231.116.38'
     red_pack_options[:act_name] = '退款'
     red_pack_options[:remark] = '小红包，意思一下，抱歉'
     red_pack_options[:send_name] = 'U果源'
-    red_pack_options[:re_openid] = 'oliNLwPfEnG_YHaxNlskPKcDM_oU'
+    red_pack_options[:re_openid] = 'oliNLwN5ggbRmL4g723QVOZ6CfAg'
     red_pack_options[:total_amount] = 500 #金额随机
 
     redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
