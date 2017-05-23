@@ -41,9 +41,9 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
     end
 
     notification_user_openids = if order.product_name.match /芒果/
-                                  Weixin::Xiaodian::Order.get_mongo_order_tongzhi_user.keys
+                                  Weixin::Xiaodian::Order.get_mongo_order_tongzhi_user
                                 else
-                                  Weixin::Xiaodian::Order.other_order_tongzhi_user.keys
+                                  Weixin::Xiaodian::Order.other_order_tongzhi_user
                                 end
     # ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
     notification_user_openids.each do |openid| # 我自己
