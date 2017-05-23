@@ -7,7 +7,7 @@ class Weixin::WeixinUser < EricWeixin::WeixinUser
 
   def agency
     users = Weixin::WeixinUser.where(openid: self.agency_openid)
-    users.first
+    # users.first
   end
 
 
