@@ -5,7 +5,7 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
 
   def owner
     users = Weixin::WeixinUser.find_by_openid self.openid
-    users.first
+    users
   end
 
   def product_price
