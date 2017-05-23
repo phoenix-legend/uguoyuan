@@ -52,10 +52,10 @@ class CommissionCharge < ActiveRecord::Base
     cs.payment_time= Time.now
 
     if redpack_order.class.name == "EricWeixin::RedpackOrder" #发送成功
-      pp "给 #{openid} 发红包成功"
+      pp "给 #{cs.agency_nickname} 发红包成功"
       cs.pay_status = PAY_STATUS_PAYED
     else #发送失败，先记录名称，后续补发
-      pp "给 #{openid} 发红包失败，失败原因是："
+      pp "给 #{cs.agency_nickname} 发红包失败，失败原因是："
       pp redpack_order
       redpack_order.to_logger
       cs.pay_status = PAY_STATUS_FIELD
