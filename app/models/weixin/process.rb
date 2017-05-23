@@ -204,7 +204,7 @@ options 样例
   # todo 发反佣等
   def self.order_sign_in order_id
     pp '回调成功'
-    CommissionCharge.send_commission_charge order_id
+    CommissionCharge.delay.send_commission_charge order_id
   end
 
 

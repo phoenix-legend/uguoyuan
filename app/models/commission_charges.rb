@@ -48,7 +48,7 @@ class CommissionCharge < ActiveRecord::Base
     red_pack_options[:remark] = '恭喜, 一个订单已完成签收,加油。'
     red_pack_options[:send_name] = 'U果源'
     red_pack_options[:re_openid] = cs.agency_openid
-    red_pack_options[:total_amount] = cs.commision_charge_number #金额随机
+    red_pack_options[:total_amount] = cs.commision_charge_number
     pp red_pack_options
     redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
     pp redpack_order
