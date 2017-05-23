@@ -32,7 +32,7 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
   # todo 按不同的品类, 发通知给不同的用户
   def self.order_tongzhi order_id, options
 
-    order = ::EricWeixin::Xiaodian::Order.where("order_id = ?", order_id).first
+    order = ::EricWeixin::Xiaodian::Order.where("order_id = ?", order_id)
     1.upto(10) do
       if order.receiver_name.blank?
         sleep 1
