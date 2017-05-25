@@ -232,7 +232,7 @@ options 样例
     red_pack_options[:remark] = '小红包，意思一下，抱歉'
     red_pack_options[:send_name] = 'U果源'
     red_pack_options[:re_openid] = 'oliNLwN5ggbRmL4g723QVOZ6CfAg'
-    red_pack_options[:total_amount] = 500 #金额随机
+    red_pack_options[:total_amount] = 100 #金额随机
 
     redpack_order = EricWeixin::RedpackOrder.create_redpack_order red_pack_options # 发红包
 

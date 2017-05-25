@@ -40,6 +40,7 @@ class CommissionCharge < ActiveRecord::Base
   def self.send_commission_charge order_id
 
     cs = CommissionCharge.find_by_weixin_xiaodian_order_id order_id
+    return if cs.blank?
 
     red_pack_options = {}
     red_pack_options[:wishing] = '恭喜, 一个订单已完成签收'

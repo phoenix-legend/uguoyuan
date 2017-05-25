@@ -124,7 +124,7 @@ module Weixin::WeixinAutoReplyFunctions
 
 
 
-    # 如果已经是代理,以下逻辑就不用走了
+    # 如果已经是代理,以下逻辑就不用走了。 反正图已经发下去了
     return if weixin_user.agency_flg == true
 
     weixin_user.agency_flg = true
