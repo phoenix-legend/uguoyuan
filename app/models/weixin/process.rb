@@ -46,13 +46,17 @@ class ::Weixin::Process
       when /sale-agent-/
         # todo  如果1分钟前已关注了, 那么不成为任何人的下线。
         # todo  如果一个人已经成为别人的下线了,那么也不成为下线
-        pp '////'
+        # pp '////'
         openid = event_key.gsub('sale-agent-', '')
-        pp openid
-        agency = EricWeixin::WeixinUser.where(openid: openid).first
-        pp agency.openid
+        # pp openid
         user = EricWeixin::WeixinUser.where(openid: options[:FromUserName]).first
-        pp user.openid
+        return unless user.agency_openid.blank?
+        return if user.id <= 1466 #已经注册过的, 就不再成为别人的代理会员。
+        agency = EricWeixin::WeixinUser.where(openid: openid).first
+
+        # pp agency.openid
+
+        # pp user.openid
         user.agency_openid = agency.openid
         user.save!
     end
