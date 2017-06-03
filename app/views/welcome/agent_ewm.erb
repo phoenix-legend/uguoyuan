@@ -8,7 +8,8 @@
       以上是您的推广二维码图片,请长按保存到您手机,以便分享在朋友圈。
     </div>
     <div class="notice">
-
+      <% usernumber = Weixin::WeixinUser.where("agency_openid = ? and subscribe = 1", @weixin_user.openid).count %>
+      您目前有<%=usernumber%>个关注用户。
     </div>
   </div>
 
