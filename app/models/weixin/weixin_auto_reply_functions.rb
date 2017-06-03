@@ -152,7 +152,7 @@ module Weixin::WeixinAutoReplyFunctions
                                                            message_type: 'video',
                                                            data: {:media_id => 'QH-v2WNZTxGMY9gYtYRtfxJxbpjtfE6n0ENREHRBG78'},
                                                            message_id: options[:MsgId]
-    return true
+    return ''
   end
 
 
