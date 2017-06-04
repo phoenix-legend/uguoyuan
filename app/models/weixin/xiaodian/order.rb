@@ -12,6 +12,7 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
     order_total_price/product_count
   end
 
+  # 发芒果时通知的用户列表
   def self.get_mongo_order_tongzhi_user
     {
         "oliNLwMqJj8nnhN848FjTctMwgWo" => '壹品农夫（雷俊淞）',
@@ -22,6 +23,7 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
     }.keys
   end
 
+  #发其它水果通知的用户列表
   def self.other_order_tongzhi_user
     {
         "oliNLwN5ggbRmL4g723QVOZ6CfAg" => "琦"
@@ -68,6 +70,14 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
     end
 
     CommissionCharge.create_commission_charge order.id
+
+  end
+
+  def self.timeout_auto_sign_in
+    orders = Weixin::Xiaodian::Order.where("sign_in_timeout_time < ? and sign_in_flg = ?", Time.now, false)
+    orders.each do |order|
+      EricWeixin::Process.order_sign_in order.id
+    end
 
   end
 
