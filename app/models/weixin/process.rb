@@ -13,6 +13,9 @@ class ::Weixin::Process
                   ''
                 end
 
+    # 芒果季, 先发视频,再处理推送消息
+    Weixin::WeixinAutoReplyFunctions.delay.send_maongguo_video options[:FromUserName]
+
 
     # 处理朋友推荐，一般会用openid做为二维码参数，所以长度一般会在25位以上，先使用位数过滤一遍，可减少数据库查询负载。
     if event_key.length > 25
@@ -30,33 +33,25 @@ class ::Weixin::Process
                                                                      openid: options[:FromUserName],
                                                                      message_type: 'text',
                                                                      data: {:content => '购买完成以后，使用订购者微信扫此二维码领取开箱红包。'}
-      when /yilabao/
-        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                      FromUserName: options[:ToUserName],
-                                                                      Content: '你好，欢迎品尝来自U果源的好吃的苹果🍏。
-
-您手上的苹果是U果源直接从果农手中寄出，新鲜健康、无污染，不打腊。
-
-如果觉得味道不错，可直接从下方菜单中购买，感谢您的支持！'
-      when /yikao_nianhui_2016/
-        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                      FromUserName: options[:ToUserName],
-                                                                      Content: '户外年会红包领取已结束'
+#       when /yilabao/
+#         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+#                                                                       FromUserName: options[:ToUserName],
+#                                                                       Content: '你好，欢迎品尝来自U果源的好吃的苹果🍏。
+#
+# 您手上的苹果是U果源直接从果农手中寄出，新鲜健康、无污染，不打腊。
+#
+# 如果觉得味道不错，可直接从下方菜单中购买，感谢您的支持！'
+#       when /yikao_nianhui_2016/
+#         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+#                                                                       FromUserName: options[:ToUserName],
+#                                                                       Content: '户外年会红包领取已结束'
 
       when /sale-agent-/
-        # todo  如果1分钟前已关注了, 那么不成为任何人的下线。
-        # todo  如果一个人已经成为别人的下线了,那么也不成为下线
-        # pp '////'
         openid = event_key.gsub('sale-agent-', '')
-        # pp openid
         user = EricWeixin::WeixinUser.where(openid: options[:FromUserName]).first
         return unless user.agency_openid.blank?
         return if user.id <= 1466 #已经注册过的, 就不再成为别人的代理会员。
         agency = EricWeixin::WeixinUser.where(openid: openid).first
-
-        # pp agency.openid
-
-        # pp user.openid
         user.agency_openid = agency.openid
         user.save!
     end
@@ -73,7 +68,15 @@ class ::Weixin::Process
 
   #用户点击回调
   def self.click_event event_key, options
-    ''
+    case event_key
+      when 'shouhoudescript'
+        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                      FromUserName: options[:ToUserName],
+                                                                      Content: SystemConfig.v('售后信息', '芒果请联系 13472446647,上海')
+      else
+        ''
+    end
+
   end
 
   #模板消息回调，不关心返回值。

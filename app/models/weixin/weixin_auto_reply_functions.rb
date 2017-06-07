@@ -146,14 +146,13 @@ module Weixin::WeixinAutoReplyFunctions
   end
 
 
-  def self.send_maongguo_video options
+  def self.send_maongguo_video openid
+    video_id = 'QH-v2WNZTxGMY9gYtYRtf6AjssswEsbJ_DSqKu_Xbl8'
     EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
-                                                           openid: options[:receive_message][:FromUserName],
+                                                           openid: openid,
                                                            message_type: 'video',
-                                                           # data: {:media_id => 'QH-v2WNZTxGMY9gYtYRtfxJxbpjtfE6n0ENREHRBG78'},
-                                                           data: {:media_id => 'QH-v2WNZTxGMY9gYtYRtf21H3Mzl4HRCS8E-zLW47UE'},
-
-                                                           message_id: options[:MsgId]
+                                                           data: {:media_id => video_id},
+                                                           message_id: 1
     return ''
   end
 
