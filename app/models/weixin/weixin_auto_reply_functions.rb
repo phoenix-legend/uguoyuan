@@ -118,19 +118,20 @@ module Weixin::WeixinAutoReplyFunctions
     agency_ewm_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DaHR0cDovL3d3dy51Z3VveXVhbi5jbi93ZWxjb21lL2FnZW50X2V3bT9hPTE%3D&response_type=code&scope=snsapi_base&state=abc#wechat_redirect"
     weixin_user = EricWeixin::WeixinUser.where(openid: options[:receive_message][:FromUserName]).first
 
-    EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
-                                                           openid: options[:receive_message][:FromUserName],
-                                                           message_type: 'text',
-                                                           data: {:content => "<a href='#{agency_ewm_url}'>点击这里获取代理专用二维码</a>"},
-                                                           message_id: options[:MsgId]
-
     mongo_pics.keys.each do |pic_mediaid|
       EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
                                                              openid: options[:receive_message][:FromUserName],
                                                              message_type: 'image',
                                                              data: {:media_id => pic_mediaid},
                                                              message_id: options[:MsgId]
+      sleep 1
     end
+    sleep 1
+    EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                           openid: options[:receive_message][:FromUserName],
+                                                           message_type: 'text',
+                                                           data: {:content => "<a href='#{agency_ewm_url}'>点击这里获取专用分享二维码</a>"},
+                                                           message_id: options[:MsgId]
 
 
 
