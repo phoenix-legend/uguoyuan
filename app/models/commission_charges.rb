@@ -43,10 +43,10 @@ class CommissionCharge < ActiveRecord::Base
     return if cs.blank?
 
     red_pack_options = {}
-    red_pack_options[:wishing] = '恭喜, 一个订单已完成签收'
+    red_pack_options[:wishing] = SystemConfig.v '红包~订单签收第一屏消息~wishing', '恭喜, 一个订单已签收'
     red_pack_options[:client_ip] = '123.59.130.146'
     red_pack_options[:act_name] = '感谢'
-    red_pack_options[:remark] = '恭喜, 一个订单已完成签收,加油。'
+    red_pack_options[:remark] = SystemConfig.v '红包~订单签收第二屏消息~remark', '恭喜, 一个订单已签收,加油。'
     red_pack_options[:send_name] = 'U果源'
     red_pack_options[:re_openid] = cs.agency_openid
     red_pack_options[:total_amount] = cs.commision_charge_number

@@ -88,7 +88,8 @@ module Weixin::WeixinAutoReplyFunctions
     Weixin::WeixinAutoReplyFunctions.delay.be_agency_act options
     return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:receive_message][:FromUserName],
                                                                          FromUserName: options[:receive_message][:ToUserName],
-                                                                         Content: '代理资料正在准备发送, 2分钟内没收到请联系:13472446647, 微信同步。'
+                                                                         Content: SystemConfig.v('发送我要分享后即时回复', '正在生成您的专用二维码,请稍后...')
+
     # return ''
     ''
   end
@@ -130,7 +131,7 @@ module Weixin::WeixinAutoReplyFunctions
     EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
                                                            openid: options[:receive_message][:FromUserName],
                                                            message_type: 'text',
-                                                           data: {:content => "<a href='#{agency_ewm_url}'>点击这里获取专用分享二维码</a>"},
+                                                           data: {:content => "<a href='#{agency_ewm_url}'>#{SystemConfig.v("推广专用二维码下载链接文字", '点击这里获取您的专用分享二维码')}</a>"},
                                                            message_id: options[:MsgId]
 
 
