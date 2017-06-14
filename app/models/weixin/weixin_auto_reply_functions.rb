@@ -106,15 +106,25 @@ module Weixin::WeixinAutoReplyFunctions
   def self.be_agency_act options
     # 金煌芒图片
     mongo_pics = {
-        'QH-v2WNZTxGMY9gYtYRtf4W6aSJFQCmh0Qh1R-K2G0o' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtfwLBN8vg8TNeVmoe6_YTvMY' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf04NXoVEuOr93ft8twuFXjw' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf-9AqYtDTHgZEEwnL5OOaUc' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtfxeSVQfY7zH7uIYyK6iB7EY' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf3vIGfpANmlaVFDs-bLLLaI' => '金煌芒',
-        "QH-v2WNZTxGMY9gYtYRtf1yuBNJNpq-B_54FPsRBlDA" => '金煌芒',
-        "QH-v2WNZTxGMY9gYtYRtf8L7qb-GoBOdSMsTuGnh5jc" => '金煌芒',
-        "QH-v2WNZTxGMY9gYtYRtf-pYbRL54-MOJGNM5GKbpFo" => '金煌芒'
+        # 'QH-v2WNZTxGMY9gYtYRtf4W6aSJFQCmh0Qh1R-K2G0o' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtfwLBN8vg8TNeVmoe6_YTvMY' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf04NXoVEuOr93ft8twuFXjw' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf-9AqYtDTHgZEEwnL5OOaUc' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtfxeSVQfY7zH7uIYyK6iB7EY' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf3vIGfpANmlaVFDs-bLLLaI' => '金煌芒',
+        # "QH-v2WNZTxGMY9gYtYRtf1yuBNJNpq-B_54FPsRBlDA" => '金煌芒',
+        # "QH-v2WNZTxGMY9gYtYRtf8L7qb-GoBOdSMsTuGnh5jc" => '金煌芒',
+        # "QH-v2WNZTxGMY9gYtYRtf-pYbRL54-MOJGNM5GKbpFo" => '金煌芒'
+
+        'QH-v2WNZTxGMY9gYtYRtfxKrinI3jx3s_8bom1mV1fM' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf063CWbZba4QXG1f7vGHiNI' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf6Ad3Z6r_4Ejf7tqVf-4yIk' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf8B_sy0R_As3hNJcrwbkMg8' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf8rJlo9aRxvs9zkNH7nlSVk' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf-WIZEmEAJ4RHRtaVScr3gc' => '金煌芒',
+        'QH-v2WNZTxGMY9gYtYRtf7sV8GAFTi9m6_vwSWgklBM' => '金煌芒',
+
+
     }
     agency_ewm_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaa334fd34be16fca&redirect_uri=http%3A%2F%2Fwww.uguoyuan.cn%2Feric_weixin%2Fweixin%2Fsnsapi%3Fweixin_app_id%3Dwxaa334fd34be16fca%26url%3DaHR0cDovL3d3dy51Z3VveXVhbi5jbi93ZWxjb21lL2FnZW50X2V3bT9hPTE%3D&response_type=code&scope=snsapi_base&state=abc#wechat_redirect"
     weixin_user = EricWeixin::WeixinUser.where(openid: options[:receive_message][:FromUserName]).first
