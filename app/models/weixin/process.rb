@@ -76,7 +76,7 @@ class ::Weixin::Process
       when 'tuihuanshuoming'
 
         EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
-                                                               openid: options[:receive_message][:FromUserName],
+                                                               openid: options[:FromUserName],
                                                                message_type: 'image',
                                                                data: {:media_id => 'QH-v2WNZTxGMY9gYtYRtf2rfrtqi6iD0zaAn61F2m4Y'},
                                                                message_id: options[:MsgId]
