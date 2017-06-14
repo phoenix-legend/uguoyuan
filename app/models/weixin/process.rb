@@ -74,9 +74,13 @@ class ::Weixin::Process
                                                                       FromUserName: options[:ToUserName],
                                                                       Content: SystemConfig.v('售后信息', '芒果请联系 13472446647,上海')
       when 'tuihuanshuoming'
-        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
-                                                                      FromUserName: options[:ToUserName],
-                                                                      Content: SystemConfig.v('退货说明', '芒果请联系 13472446647,上海')
+
+        EricWeixin::MultCustomer.delay.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                               openid: options[:receive_message][:FromUserName],
+                                                               message_type: 'image',
+                                                               data: {:media_id => 'QH-v2WNZTxGMY9gYtYRtf2rfrtqi6iD0zaAn61F2m4Y'},
+                                                               message_id: options[:MsgId]
+        return ''
       else
         ''
     end
