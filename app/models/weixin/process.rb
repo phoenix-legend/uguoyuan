@@ -73,6 +73,10 @@ class ::Weixin::Process
         return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
                                                                       FromUserName: options[:ToUserName],
                                                                       Content: SystemConfig.v('售后信息', '芒果请联系 13472446647,上海')
+      when 'tuihuanshuoming'
+        return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:FromUserName],
+                                                                      FromUserName: options[:ToUserName],
+                                                                      Content: SystemConfig.v('退货说明', '芒果请联系 13472446647,上海')
       else
         ''
     end
