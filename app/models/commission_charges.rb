@@ -8,12 +8,21 @@ class CommissionCharge < ActiveRecord::Base
     owner = order.owner
     return if owner.agency_openid.blank?
     agency = owner.agency
+
+    # 这里计算代理的提成,芒果的提成
+    ticheng = 0.1
+    #反利15%的名单
+    fanli_15_names = SystemConfig.v('芒果返利15%的代理名单', 'oliNLwJQfjeX4OKfe6CLeHt_-ASg;oliNLwGSBx3rsyFMH2SZ-VePZRyc').split(';')
+    if order.product_name.match(/芒果/) and fanli_15_names.include?(agency.openid)
+      ticheng = 0.15
+    end
+
     cc = CommissionCharge.new weixin_xiaodian_order_id: order.id,
                               agency_openid: agency.openid,
                               agency_nickname: agency.nickname,
                               customer_openid: owner.openid,
                               customer_nickname: owner.nickname,
-                              commision_charge_number: order.order_total_price/10,
+                              commision_charge_number: (order.order_total_price * ticheng).to_i,
                               plan_payment_time: order.sign_in_timeout_time.to_date,
                               pay_status: PAY_STATUS_NEED_PAY
     cc.save!
