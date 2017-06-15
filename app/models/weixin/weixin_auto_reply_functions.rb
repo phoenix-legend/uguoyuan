@@ -64,7 +64,7 @@ module Weixin::WeixinAutoReplyFunctions
     nickname = weixin_user.nickname
 
     city = content.split(/,|，/)[1]
-    url = "http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu?openid=#{openid}&nickname=#{CGI::escape  nickname}&city=#{CGI::escape  city||''}"
+    url = "http://che.uguoyuan.cn/api/v1/update_user_infos/get_kouling_for_kefu?openid=#{openid}&nickname=#{CGI::escape nickname}&city=#{CGI::escape city||''}"
     response = RestClient.get url
     pp response
     response = response.body
@@ -76,10 +76,10 @@ module Weixin::WeixinAutoReplyFunctions
               end
 
     EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
-                                                                 openid: openid,
-                                                                 message_type: 'text',
-                                                                 data: {:content => kouling},
-                                                                 message_id: options[:MsgId]
+                                                           openid: openid,
+                                                           message_type: 'text',
+                                                           data: {:content => kouling},
+                                                           message_id: options[:MsgId]
   end
 
 
@@ -87,8 +87,8 @@ module Weixin::WeixinAutoReplyFunctions
     pp options
     Weixin::WeixinAutoReplyFunctions.delay.be_agency_act options
     return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:receive_message][:FromUserName],
-                                                                         FromUserName: options[:receive_message][:ToUserName],
-                                                                         Content: SystemConfig.v('发送我要分享后即时回复', '正在生成您的专用二维码,请稍后...')
+                                                                  FromUserName: options[:receive_message][:ToUserName],
+                                                                  Content: SystemConfig.v('发送我要分享后即时回复', '正在生成您的专用二维码,请稍后...')
 
     # return ''
     ''
@@ -145,8 +145,6 @@ module Weixin::WeixinAutoReplyFunctions
                                                            message_id: options[:MsgId]
 
 
-
-
     # 如果已经是代理,以下逻辑就不用走了。 反正图已经发下去了
     return if weixin_user.agency_flg == true
 
@@ -168,6 +166,78 @@ module Weixin::WeixinAutoReplyFunctions
     return ''
   end
 
+
+  #发送代理业绩
+  def self.agency_yeji options
+    Weixin::WeixinAutoReplyFunctions.delay.agency_yeji_act options
+    return ::EricWeixin::ReplyMessage.get_reply_user_message_text ToUserName: options[:receive_message][:FromUserName],
+                                                                  FromUserName: options[:receive_message][:ToUserName],
+                                                                  Content: SystemConfig.v('查看代理业绩立即回复', '请稍等,业绩正在统计中...')
+
+  end
+
+  def self.agency_yeji_act options
+    openid = "oliNLwN5ggbRmL4g723QVOZ6CfAg"||options[:receive_message][:FromUserName]
+
+
+    today_agency_number = Weixin::WeixinUser.where("subscribe = 1 and agency_openid = ? and agency_time >= ? and agency_time <= ?", openid, "#{Date.today.strftime("%Y-%m-%d")} 00:00:00", "#{Date.today.strftime("%Y-%m-%d")} 23:59:59").count
+
+    all_agency_number = Weixin::WeixinUser.where("subscribe = 1 and agency_openid = ? ", openid).count
+
+    agency_openids = Weixin::WeixinUser.where("subscribe = 1 and agency_openid = ? ", openid).collect &:openid
+
+
+    today_order_number = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
+        where("weixin_users.agency_openid  in (?) and weixin_xiaodian_orders.created_at >= ? and weixin_xiaodian_orders.created_at <= ?", agency_openids,
+              "#{Date.today.strftime("%Y-%m-%d")} 00:00:00", "#{Date.today.strftime("%Y-%m-%d")} 23:59:59").count
+
+    all_order_number = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
+        where("weixin_users.agency_openid  in (?) ", agency_openids).count
+
+    today_orders = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
+        where("weixin_users.agency_openid  in (?) and weixin_xiaodian_orders.created_at >= ? and weixin_xiaodian_orders.created_at <= ?", agency_openids,
+              "#{Date.today.strftime("%Y-%m-%d")} 00:00:00", "#{Date.today.strftime("%Y-%m-%d")} 23:59:59").
+        group("weixin_users.agency_openid").
+        select("weixin_users.agency_openid as agency_openid, count(*) as c")
+
+    yesterday_orders = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
+        where("weixin_users.agency_openid  in (?) and weixin_xiaodian_orders.created_at >= ? and weixin_xiaodian_orders.created_at <= ?", agency_openids,
+              "#{Date.yesterday.strftime("%Y-%m-%d")} 00:00:00", "#{Date.yesterday.strftime("%Y-%m-%d")} 23:59:59").
+        group("weixin_users.agency_openid").
+        select("weixin_users.agency_openid as agency_openid, count(*) as c")
+
+
+    str = "您今日新增代理#{today_agency_number}个, 合计有效代理数量:#{all_agency_number}个,
+今日新增订单#{today_order_number}个, 总订单数#{all_order_number}个。
+今日订单分布(共#{today_order_number}个):"
+    today_orders.each do |order|
+      next if order.c == 0
+      user = Weixin::WeixinUser.where("openid = ?", order.agency_openid).first
+      s = "\n#{user.nickname} #{order.c}个"
+      str << s
+    end
+
+
+
+    str << " \n昨日订单分布:"
+
+    yesterday_orders.each do |order|
+      next if order.c == 0
+      user = Weixin::WeixinUser.where("openid = ?", order.agency_openid).first
+      s = "\n#{user.nickname} #{order.c}个"
+      str << s
+    end
+
+    pp str
+
+
+
+    EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
+                                                           openid: openid,
+                                                           message_type: 'text',
+                                                           data: {:content => str},
+                                                           message_id: options[:MsgId]
+  end
 
 
 end

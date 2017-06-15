@@ -9,7 +9,7 @@ class CommissionCharge < ActiveRecord::Base
     return if owner.agency_openid.blank?
     agency = owner.agency
 
-    # 这里计算代理的提成,芒果的提成
+    # 这里计算代理的提成,芒果的提成,有一部分特殊用户, 提成15%。
     ticheng = 0.1
     #反利15%的名单
     fanli_15_names = SystemConfig.v('芒果返利15%的代理名单', 'oliNLwJQfjeX4OKfe6CLeHt_-ASg;oliNLwGSBx3rsyFMH2SZ-VePZRyc').split(';')
