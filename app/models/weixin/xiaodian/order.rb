@@ -73,14 +73,14 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
 
   end
 
-  def self.timeout_auto_sign_in
-    orders = Weixin::Xiaodian::Order.where("sign_in_timeout_time < ? and sign_in_flg = ?", Time.now, false)
-    orders.each do |order|
-      ::Weixin::Process.order_sign_in order.id
-
-    end
-
-  end
+  # def self.timeout_auto_sign_in
+  #   orders = Weixin::Xiaodian::Order.where("sign_in_timeout_time < ? and sign_in_flg = ?", Time.now, false)
+  #   orders.each do |order|
+  #     ::Weixin::Process.order_sign_in order.id
+  #
+  #   end
+  #
+  # end
 
   # CLOSING_STATUS = {
   #     0 => '未处理',

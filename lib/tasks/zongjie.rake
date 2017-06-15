@@ -11,7 +11,7 @@ namespace :zongjie do
     else
       ##  开始干活
       if [8,12,16,20].include? Time.now.hour
-        Weixin::Xiaodian::Order.timeout_auto_sign_in  #检测超时签收的订单, 做签收
+        EricWeixin::Xiaodian::Order.timeout_auto_sign_in  #检测超时签收的订单, 做签收
       end
 
       pp '检测超时签收的订单, 做签收  已执行完成'
