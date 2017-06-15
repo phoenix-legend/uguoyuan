@@ -177,7 +177,7 @@ module Weixin::WeixinAutoReplyFunctions
   end
 
   def self.agency_yeji_act options
-    openid = "oliNLwN5ggbRmL4g723QVOZ6CfAg"||options[:receive_message][:FromUserName]
+    openid = options[:receive_message][:FromUserName]
 
 
     today_agency_number = Weixin::WeixinUser.where("subscribe = 1 and agency_openid = ? and agency_time >= ? and agency_time <= ?", openid, "#{Date.today.strftime("%Y-%m-%d")} 00:00:00", "#{Date.today.strftime("%Y-%m-%d")} 23:59:59").count
