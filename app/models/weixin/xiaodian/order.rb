@@ -76,7 +76,8 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
   def self.timeout_auto_sign_in
     orders = Weixin::Xiaodian::Order.where("sign_in_timeout_time < ? and sign_in_flg = ?", Time.now, false)
     orders.each do |order|
-      ::EricWeixin::Process.order_sign_in order.id
+      ::Weixin::Process.order_sign_in order.id
+
     end
 
   end
