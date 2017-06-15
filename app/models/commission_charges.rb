@@ -6,6 +6,7 @@ class CommissionCharge < ActiveRecord::Base
   def self.create_commission_charge order_id
     order = Weixin::Xiaodian::Order.find order_id
     owner = order.owner
+    return if owner.blank?
     return if owner.agency_openid.blank?
     agency = owner.agency
 

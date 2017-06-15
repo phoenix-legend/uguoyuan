@@ -191,6 +191,10 @@ module Weixin::WeixinAutoReplyFunctions
         where("weixin_users.agency_openid  in (?) and weixin_xiaodian_orders.created_at >= ? and weixin_xiaodian_orders.created_at <= ?", agency_openids,
               "#{Date.today.strftime("%Y-%m-%d")} 00:00:00", "#{Date.today.strftime("%Y-%m-%d")} 23:59:59").count
 
+    yesterday_order_number = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
+        where("weixin_users.agency_openid  in (?) and weixin_xiaodian_orders.created_at >= ? and weixin_xiaodian_orders.created_at <= ?", agency_openids,
+              "#{Date.yesterday.strftime("%Y-%m-%d")} 00:00:00", "#{Date.yesterday.strftime("%Y-%m-%d")} 23:59:59").count
+
     all_order_number = Weixin::Xiaodian::Order.joins("left join weixin_users on weixin_users.openid = weixin_xiaodian_orders.openid").
         where("weixin_users.agency_openid  in (?) ", agency_openids).count
 
@@ -207,8 +211,8 @@ module Weixin::WeixinAutoReplyFunctions
         select("weixin_users.agency_openid as agency_openid, count(*) as c")
 
 
-    str = "您今日新增代理#{today_agency_number}个, 合计有效代理数量:#{all_agency_number}个,
-今日新增订单#{today_order_number}个, 总订单数#{all_order_number}个。
+    str = "您今日新增代理#{today_agency_number}个, 合计有效代理数量#{all_agency_number}个。\n
+今日新增订单#{today_order_number}个, 总订单数#{all_order_number}个。\n
 今日订单分布(共#{today_order_number}个):"
     today_orders.each do |order|
       next if order.c == 0
@@ -219,7 +223,7 @@ module Weixin::WeixinAutoReplyFunctions
 
 
 
-    str << " \n昨日订单分布:"
+    str << " \n\n昨日订单分布(共#{yesterday_order_number}个):"
 
     yesterday_orders.each do |order|
       next if order.c == 0
