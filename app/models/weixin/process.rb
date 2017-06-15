@@ -220,6 +220,7 @@ options 样例
   def self.order_sign_in order_id
     pp '回调成功'
     CommissionCharge.delay.send_commission_charge order_id
+
   end
 
 
