@@ -14,7 +14,7 @@ class ::Weixin::Process
                 end
 
     # 芒果季, 先发视频,再处理推送消息
-    Weixin::WeixinAutoReplyFunctions.delay.send_maongguo_video options[:FromUserName]
+    # Weixin::WeixinAutoReplyFunctions.delay.send_maongguo_video options[:FromUserName]
 
 
     # 处理朋友推荐，一般会用openid做为二维码参数，所以长度一般会在25位以上，先使用位数过滤一遍，可减少数据库查询负载。

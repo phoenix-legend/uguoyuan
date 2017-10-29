@@ -116,13 +116,13 @@ module Weixin::WeixinAutoReplyFunctions
         # "QH-v2WNZTxGMY9gYtYRtf8L7qb-GoBOdSMsTuGnh5jc" => '金煌芒',
         # "QH-v2WNZTxGMY9gYtYRtf-pYbRL54-MOJGNM5GKbpFo" => '金煌芒'
 
-        'QH-v2WNZTxGMY9gYtYRtfxKrinI3jx3s_8bom1mV1fM' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf063CWbZba4QXG1f7vGHiNI' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf6Ad3Z6r_4Ejf7tqVf-4yIk' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf8B_sy0R_As3hNJcrwbkMg8' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf8rJlo9aRxvs9zkNH7nlSVk' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf-WIZEmEAJ4RHRtaVScr3gc' => '金煌芒',
-        'QH-v2WNZTxGMY9gYtYRtf7sV8GAFTi9m6_vwSWgklBM' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtfxKrinI3jx3s_8bom1mV1fM' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf063CWbZba4QXG1f7vGHiNI' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf6Ad3Z6r_4Ejf7tqVf-4yIk' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf8B_sy0R_As3hNJcrwbkMg8' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf8rJlo9aRxvs9zkNH7nlSVk' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf-WIZEmEAJ4RHRtaVScr3gc' => '金煌芒',
+        # 'QH-v2WNZTxGMY9gYtYRtf7sV8GAFTi9m6_vwSWgklBM' => '金煌芒',
 
 
     }

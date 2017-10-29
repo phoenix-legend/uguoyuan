@@ -12,11 +12,7 @@ class CommissionCharge < ActiveRecord::Base
 
     # 这里计算代理的提成,芒果的提成,有一部分特殊用户, 提成15%。
     ticheng = 0.1
-    #反利15%的名单
-    fanli_15_names = SystemConfig.v('芒果返利15%的代理名单', 'oliNLwJQfjeX4OKfe6CLeHt_-ASg;oliNLwGSBx3rsyFMH2SZ-VePZRyc').split(';')
-    if order.product_name.match(/芒果/) and fanli_15_names.include?(agency.openid)
-      ticheng = 0.15
-    end
+
 
     cc = CommissionCharge.new weixin_xiaodian_order_id: order.id,
                               agency_openid: agency.openid,

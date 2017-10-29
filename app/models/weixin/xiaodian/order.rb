@@ -47,8 +47,8 @@ class Weixin::Xiaodian::Order < EricWeixin::Xiaodian::Order
                                 else
                                   Weixin::Xiaodian::Order.other_order_tongzhi_user
                                 end
-    # ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
-    notification_user_openids.each do |openid| # 我自己
+    ['oliNLwN5ggbRmL4g723QVOZ6CfAg','oliNLwDRVFCo-01w21xkmfydRZio'].each do |openid| #我和我妈
+    # notification_user_openids.each do |openid| # 我自己
       EricWeixin::TemplateMessageLog.send_template_message openid: openid,
                                                            template_id: "g5zjxJOrBqKGfvgQvb22Palm_j9qRz3bNlYtVnbQkng",
                                                            topcolor: '#00FF00',
