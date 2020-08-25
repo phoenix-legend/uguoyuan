@@ -1,7 +1,7 @@
-source 'https://gems.ruby-china.org'
-# source 'https://rubygems.org'
+# source 'https://gems.ruby-china.org'
+source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.5.1'
 #ruby-gemset=uguoyuan
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
