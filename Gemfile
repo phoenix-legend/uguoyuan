@@ -1,7 +1,7 @@
 # source 'https://gems.ruby-china.org'
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.3.1'
 #ruby-gemset=uguoyuan
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -41,7 +41,7 @@ gem 'exception_notification', '~> 4.0.1'
 gem 'spreadsheet'
 gem "will_paginate-foundation"
 # gem 'eric_weixin', '~> 0.4.1'
-gem 'eric_weixin', :git => 'git://github.com/ericliu1002000/eric_weixin.git'
+gem 'eric_weixin'
 gem 'eric_tools', '~> 0.0.7'
 gem 'tinymce-rails'
 gem 'jquery-ui-rails'

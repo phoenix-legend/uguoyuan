@@ -156,7 +156,9 @@ module Weixin::WeixinAutoReplyFunctions
   end
 
 
-  def self.send_maongguo_video openid
+  # {:key_word=>\"芒果视频\", :receive_message=>{:ToUserName=>\"gh_5734a2ca28e5\", :FromUserName=>\"oliNLwIZc495Q_-Zzzos2X7yiZ38\", :CreateTime=>\"1598757276\", :MsgType=>\"text\", :Content=>\"芒果视频\", :MsgId=>\"22888698279295682\"}}
+  def self.send_maongguo_video options
+    openid = options[:receive_message][:FromUserName]
     video_id = 'QH-v2WNZTxGMY9gYtYRtf6AjssswEsbJ_DSqKu_Xbl8'
     EricWeixin::MultCustomer.send_customer_service_message weixin_number: "gh_5734a2ca28e5", #公众号weixin number, 参考public accounts表
                                                            openid: openid,
